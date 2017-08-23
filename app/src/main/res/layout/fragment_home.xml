@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<com.xk.eyepetizer.ui.view.banner.HomeBanner-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+
+    <com.xk.eyepetizer.ui.view.PullRecyclerView
+        android:id="@+id/rv_home"
+        android:layout_width="match_parent"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+
+        android:layout_height="match_parent" />
+</LinearLayout>

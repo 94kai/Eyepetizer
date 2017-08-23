@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.xk.eyepetizer.player.EmptyControlVideo
+        android:id="@+id/videoView"
+        android:background="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:background="#55000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></View>
+</FrameLayout>
