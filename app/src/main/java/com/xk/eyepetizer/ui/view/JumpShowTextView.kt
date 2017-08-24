@@ -38,9 +38,6 @@ class JumpShowTextView : FrameLayout {
 
     var text: String? = ""
         set(value) {
-            if (isRun) {
-
-            }
             field = value
             computeViewSize()
             start()

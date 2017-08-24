@@ -70,7 +70,10 @@ class HomeBanner : FrameLayout {
 
     }
 
+    private var currentTitlePostion=0
+
     private fun setTitleSlogan(position: Int) {
+        currentTitlePostion=position
         val bannerItemData = bannerAdapter.datas!![position]
         tvTitle.text = bannerItemData.data?.title
         tvSlogan.text = bannerItemData.data?.slogan

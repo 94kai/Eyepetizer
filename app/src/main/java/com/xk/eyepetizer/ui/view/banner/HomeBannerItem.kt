@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import com.bumptech.glide.Glide
+import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.TAG
@@ -40,9 +41,9 @@ class HomeBannerItem : FrameLayout {
         if (thumbPlayUrl == null || "".equals(thumbPlayUrl)) {
             videoView.visibility = View.GONE
         } else {
-//            videoView.visibility = View.VISIBLE
-//            videoView.setUp(thumbPlayUrl, false, "")
-//            GSYVideoType.setShowType(GSYVideoType.SCREEN_MATCH_FULL)
+            videoView.visibility = View.VISIBLE
+            videoView.setUp(thumbPlayUrl, false, "")
+            GSYVideoType.setShowType(GSYVideoType.SCREEN_MATCH_FULL)
         }
     }
 

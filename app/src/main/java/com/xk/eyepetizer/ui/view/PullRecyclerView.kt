@@ -24,7 +24,9 @@ import com.xk.eyepetizer.ui.view.banner.HomeBanner
 class PullRecyclerView : RecyclerView {
     constructor(context: Context?) : this(context, null)
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle){
+        overScrollMode=OVER_SCROLL_NEVER
+    }
 
 
     val pullDistance = 300//下拉高度达到这个的时候，松开手才会刷新
@@ -154,7 +156,11 @@ class PullRecyclerView : RecyclerView {
                 canRefresh = false
                 isFirstMove = true
                 if (getChildAt(0) is HomeBanner) {
-                    smoothRecover()
+                    getChildAt(0)?.let {
+                        if(it.layoutParams.height>originalFirstItemHeight){
+                            smoothRecover()
+                        }
+                    }
                 }
             }
         }

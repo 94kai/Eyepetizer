@@ -9,33 +9,31 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rg_root"></FrameLayout>
 
-    <android.support.v7.widget.Toolbar
+
+    <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+        android:id="@+id/tv_bar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+            android:textColor="@android:color/black"
 
-            <TextView
-                android:id="@+id/tv_bar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:textSize="16sp" />
+        android:gravity="center"
+        android:textSize="20sp" />
 
-            <ImageView
-                android:id="@+id/iv_search"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/ic_action_search_white" />
-        </RelativeLayout>
+        <ImageView
+        android:id="@+id/iv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/ic_action_search_white" />
+    </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
 
     <View
         android:layout_width="match_parent"
