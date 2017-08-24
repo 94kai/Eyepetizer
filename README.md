@@ -14,7 +14,7 @@
 
 效果如图：
 
-![](image/home.gif)
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home_small.gif)
 
 该页主要仿了官方app的几个UI
 
