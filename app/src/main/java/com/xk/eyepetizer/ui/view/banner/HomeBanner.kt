@@ -127,6 +127,7 @@ class HomeBanner : FrameLayout {
 
 
     fun setIndicators(bannerDatas: ArrayList<Item>) {
+        indicators.removeAllViews()
         bannerDatas.forEach { item ->
             val indicator = Indicator(context)
             val layoutParams = LinearLayout.LayoutParams(DisplayManager.getRealHeight(20)!!, DisplayManager.getRealHeight(20)!!)

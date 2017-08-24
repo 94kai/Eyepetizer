@@ -2,6 +2,7 @@ package com.xk.eyepetizer.mvp.presenter
 
 import com.xk.eyepetizer.mvp.contract.HomeContract
 import com.xk.eyepetizer.mvp.model.HomeModel
+import com.xk.eyepetizer.mvp.model.bean.HomeBean
 
 /**
  * Created by xuekai on 2017/8/21.
@@ -13,6 +14,9 @@ class HomePresenter(view: HomeContract.IView) : HomeContract.IPresenter {
         HomeModel()
     }
 
+
+    var bannerHomeBean: HomeBean? = null
+
     init {
         homeView = view
     }
@@ -23,13 +27,20 @@ class HomePresenter(view: HomeContract.IView) : HomeContract.IPresenter {
     override fun requestFirstData() {
         homeModel.loadFirstData()
                 .flatMap({ homeBean ->
-                    homeView.setFirstData(homeBean)
+                    bannerHomeBean = homeBean
+
                     homeModel.loadMoreData(homeBean.nextPageUrl)
                 })
                 .subscribe({ homeBean ->
-                    homeView.setMoreData(homeBean)
                     nextPageUrl = homeBean.nextPageUrl
-                }, { t -> t.printStackTrace() })
+                    bannerHomeBean!!.issueList[0].count = bannerHomeBean!!.issueList[0].itemList.size
+
+                    bannerHomeBean?.issueList!![0].itemList.addAll(homeBean.issueList[0].itemList)
+                    homeView.setFirstData(bannerHomeBean!!)
+                }, { t ->
+                    t.printStackTrace()
+                    homeView.onError()
+                })
     }
 
     override fun requestMoreData() {

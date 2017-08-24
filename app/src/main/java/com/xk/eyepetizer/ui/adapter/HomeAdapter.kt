@@ -23,7 +23,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
         set(value) {
             field = value
             isNewBanner = true
-            bannerItemListCount = value.size
+            notifyDataSetChanged()
         }
 
     //banner用了的item的数量（包括type为banner2的）
@@ -100,5 +100,8 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     }
 
 
+    fun setBannerSize(size:Int){
+        bannerItemListCount=size
+    }
     class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
 }

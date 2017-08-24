@@ -12,14 +12,17 @@ import com.xk.eyepetizer.TAG
 import com.xk.eyepetizer.mvp.contract.HomeContract
 import com.xk.eyepetizer.mvp.model.bean.HomeBean
 import com.xk.eyepetizer.mvp.presenter.HomePresenter
+import com.xk.eyepetizer.showToast
 import com.xk.eyepetizer.ui.adapter.HomeAdapter
 import com.xk.eyepetizer.ui.base.BaseFragment
+import com.xk.eyepetizer.ui.view.PullRecyclerView
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Created by xuekai on 2017/8/21.
  */
 class HomeFragment : BaseFragment(), HomeContract.IView {
+
 
     val homeAdapter: HomeAdapter by lazy { HomeAdapter() }
 
@@ -45,11 +48,15 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
 
     }
 
-    var loading = false
+    var loadingMore = false
     private fun initView() {
         rv_home.adapter = homeAdapter
         rv_home.layoutManager = LinearLayoutManager(activity)
-
+        rv_home.setOnRefreshListener(object :PullRecyclerView.OnRefreshListener{
+            override fun onRefresh() {
+                presenter.requestFirstData()
+            }
+        })
 
         rv_home.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -62,8 +69,8 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
                     val firstVisibleItem = (rv_home.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (firstVisibleItem+childCount==itemCount) {
                         Log.d(TAG, "到底了" );
-                        if (!loading) {
-                            loading = true
+                        if (!loadingMore) {
+                            loadingMore = true
                             onLoadMore()
                         }
                     }
@@ -79,11 +86,19 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
 
 
     override fun setMoreData(homeBean: HomeBean) {
-        loading = false
+        loadingMore = false
         homeAdapter.addData(homeBean)
+
     }
 
     override fun setFirstData(homeBean: HomeBean) {
+        homeAdapter.setBannerSize(homeBean.issueList[0].count)
         homeAdapter.itemList = homeBean.issueList[0].itemList
+        rv_home.hideLoading()
+    }
+
+    override fun onError() {
+        showToast("网络错误")
+        rv_home.hideLoading()
     }
 }

@@ -26,6 +26,8 @@ class EmptyControlVideo(context: Context?, attrs: AttributeSet?) : StandardGSYVi
     override fun getLayoutId(): Int {
         return R.layout.empty_control_video
     }
+
+
     open class EmptyControlVideoCallBack: VideoAllCallBack {
         override fun onEnterFullscreen(url: String?, vararg objects: Any?) {
 

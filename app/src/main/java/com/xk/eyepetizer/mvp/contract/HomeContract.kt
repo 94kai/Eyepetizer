@@ -12,6 +12,7 @@ interface HomeContract {
     interface IView : BaseView<IPresenter> {
         fun setFirstData(homeBean: HomeBean)
         fun setMoreData(homeBean: HomeBean)
+        fun onError()
     }
 
     interface IPresenter : BasePresenter {
