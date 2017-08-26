@@ -1,4 +1,4 @@
-package com.xk.eyepetizer.ui.view.banner
+package com.xk.eyepetizer.ui.view.home.banner
 
 import android.support.v4.view.ViewPager
 import android.view.View

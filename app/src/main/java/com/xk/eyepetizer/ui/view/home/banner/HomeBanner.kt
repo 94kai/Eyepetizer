@@ -1,4 +1,4 @@
-package com.xk.eyepetizer.ui.view.banner
+package com.xk.eyepetizer.ui.view.home.banner
 
 import android.content.Context
 import android.graphics.Color
@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.mvp.model.bean.Item
-import com.xk.eyepetizer.ui.view.JumpShowTextView
+import com.xk.eyepetizer.ui.view.common.JumpShowTextView
 import com.xk.eyepetizer.util.DisplayManager
 
 
@@ -44,7 +44,6 @@ class HomeBanner : FrameLayout {
 
 
     private fun initListener() {
-
         viewPager.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
@@ -85,7 +84,7 @@ class HomeBanner : FrameLayout {
 
         viewPager.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, DisplayManager.getRealHeight(810)!!)
         viewPager.adapter = bannerAdapter
-        viewPager.setPageTransformer(true,HomeBannerTransformer())
+        viewPager.setPageTransformer(true, HomeBannerTransformer())
 
         val floatInfo = LinearLayout(context)
         floatInfo.gravity = Gravity.CENTER_HORIZONTAL
@@ -102,10 +101,11 @@ class HomeBanner : FrameLayout {
         tvTitle.color = Color.WHITE
         tvTitle.isBold = true
         tvTitle.marginBottom=DisplayManager.dip2px(5f)?.toFloat()!!
-
+        tvTitle.layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
 
         tvSlogan.textSize = 33f
         tvSlogan.color = Color.WHITE
+        tvSlogan.layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
 
 
         indicators.gravity = Gravity.CENTER_HORIZONTAL

@@ -1,4 +1,4 @@
-package com.xk.eyepetizer.ui.view
+package com.xk.eyepetizer.ui.view.home
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -16,7 +16,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.example.v1.xklibrary.LogUtil
 import com.xk.eyepetizer.R
-import com.xk.eyepetizer.ui.view.banner.HomeBanner
+import com.xk.eyepetizer.ui.view.home.banner.HomeBanner
 
 /**
  * Created by xuekai on 2017/8/23.
@@ -47,36 +47,36 @@ class PullRecyclerView : RecyclerView {
     var mLastMotionX = 0f
     var deltaY = 0f
     var deleaX = 0f
-    override fun onInterceptTouchEvent(e: MotionEvent?): Boolean {
-        var resume = false;
-        when (e?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                // 发生down事件时,记录y坐标
-                mLastMotionY = e.y
-                mLastMotionX = e.x
-                resume = false;
-            }
-            MotionEvent.ACTION_MOVE -> {
-                // deltaY > 0 是向下运动,< 0是向上运动
-                deltaY = e.y!!.minus(mLastMotionY)
-                deleaX = e.x!!.minus(mLastMotionX)
-
-                if (Math.abs(deleaX) > Math.abs(deltaY)) {
-                    resume = false;
-                } else {
-                    //当前正处于滑动
-                    //这块要模拟onTouchEvent中的down，执行以下代码
-                    downY = e.y.toInt()
-                    constDownY = e.y.toInt()
-                    if (!canScrollVertically(-1) && !willRefresh) {
-                        canRefresh = true
-                    }
-                    resume = true;
-                }
-            }
-        }
-        return resume;
-    }
+//    override fun onInterceptTouchEvent(e: MotionEvent?): Boolean {
+//        var resume = false;
+//        when (e?.action) {
+//            MotionEvent.ACTION_DOWN -> {
+//                // 发生down事件时,记录y坐标
+//                mLastMotionY = e.y
+//                mLastMotionX = e.x
+//                resume = false;
+//            }
+//            MotionEvent.ACTION_MOVE -> {
+//                // deltaY > 0 是向下运动,< 0是向上运动
+//                deltaY = e.y!!.minus(mLastMotionY)
+//                deleaX = e.x!!.minus(mLastMotionX)
+//
+//                if (Math.abs(deleaX) > Math.abs(deltaY)) {
+//                    resume = false;
+//                } else {
+//                    //当前正处于滑动
+//                    //这块要模拟onTouchEvent中的down，执行以下代码
+//                    downY = e.y.toInt()
+//                    constDownY = e.y.toInt()
+//                    if (!canScrollVertically(-1) && !willRefresh) {
+//                        canRefresh = true
+//                    }
+//                    resume = true;
+//                }
+//            }
+//        }
+//        return resume;
+//    }
 
     override fun onTouchEvent(e: MotionEvent?): Boolean {
 

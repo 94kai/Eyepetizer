@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 
 class MainActivity : BaseActivity() {
+    // TODO: by xk 2017/8/25 23:30 启动页视频 在assets目录
     val tabs = listOf(R.id.rb_home, R.id.rb_find, R.id.rb_hot)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

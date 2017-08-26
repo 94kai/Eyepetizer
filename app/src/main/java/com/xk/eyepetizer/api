@@ -10,8 +10,24 @@ val STRATEGY = arrayOf("weekly", "monthly", "historical")//周排行 日排行 �
 //发现更多详情接口  根据上面发现的分类，然后结合周 日 月排行来排
 "http://baobab.wandoujia.com/api/v3/videos?categoryName=%s&strategy=%s&udid=26868b32e808498db32fd51fb422d00175e179df&vc=83";
 //搜索关键字
-"http://baobab.kaiyanapp.com/api/v1/search?num=10&query=%E4%BD%A0&start=10"
-
+http://baobab.kaiyanapp.com/api/v1/search?num=10&query=xxx&start=10
 
 //首页请求
 //首页  、 排行  发现
+
+
+
+作者信息
+http://baobab.kaiyanapp.com/api/v4/pgcs/detail/tab?id=571
+
+
+详情页从上页拿到数据，然后显示一部分，然后相关这块又显示一部分
+有作者显示作者 无作者不显示
+详情页的相关
+http://baobab.kaiyanapp.com/api/v4/video/related?id=45897
+
+
+详情页：
+第一个item 上页数据 有
+第二个item 上页 可无
+第三个item 请求相关接口

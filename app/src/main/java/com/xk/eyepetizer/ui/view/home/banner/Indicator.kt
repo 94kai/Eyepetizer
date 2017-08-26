@@ -1,4 +1,4 @@
-package com.xk.eyepetizer.ui.view.banner
+package com.xk.eyepetizer.ui.view.home.banner
 
 import android.content.Context
 import android.graphics.Canvas

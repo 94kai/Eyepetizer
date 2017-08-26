@@ -1,6 +1,7 @@
 package com.xk.eyepetizer.net
 
 import com.xk.eyepetizer.mvp.model.bean.HomeBean
+import com.xk.eyepetizer.mvp.model.bean.Issue
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -23,4 +24,11 @@ interface ApiService {
      */
     @GET
     fun getMoreHomeData(@Url url: String): Observable<HomeBean>
+
+
+    /**
+     * 根据item id获取相关视频
+     */
+    @GET("v4/video/related?")
+    fun getRelatedData(@Query("id") id: Int): Observable<Issue>
 }

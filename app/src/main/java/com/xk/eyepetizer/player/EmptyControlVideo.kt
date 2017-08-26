@@ -2,6 +2,7 @@ package com.xk.eyepetizer.player
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import com.shuyu.gsyvideoplayer.listener.VideoAllCallBack
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.xk.eyepetizer.R
@@ -11,6 +12,10 @@ import com.xk.eyepetizer.R
  * Created by xuekai on 2017/8/22.
  */
 class EmptyControlVideo(context: Context?, attrs: AttributeSet?) : StandardGSYVideoPlayer(context, attrs) {
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        return false
+    }
     override fun touchSurfaceMoveFullLogic(absDeltaX: Float, absDeltaY: Float) {
         super.touchSurfaceMoveFullLogic(absDeltaX, absDeltaY)
         //不给触摸快进，如果需要，屏蔽下方代码即可
@@ -28,7 +33,7 @@ class EmptyControlVideo(context: Context?, attrs: AttributeSet?) : StandardGSYVi
     }
 
 
-    open class EmptyControlVideoCallBack: VideoAllCallBack {
+    open class EmptyControlVideoCallBack : VideoAllCallBack {
         override fun onEnterFullscreen(url: String?, vararg objects: Any?) {
 
         }

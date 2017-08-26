@@ -1,9 +1,11 @@
 package com.xk.eyepetizer.mvp.model.bean
 
+import java.io.Serializable
+
 /**
  * Created by xuekai on 2017/8/20.
  */
-data class Item(val type: String, val data: Data?, val tag: String) {
+data class Item(val type: String, val data: Data?, val tag: String) : Serializable {
 
     data class Data(val dataType: String, val text: String, val id: Int, val title: String, val slogan: String?,
                     val description: String,
@@ -16,8 +18,8 @@ data class Item(val type: String, val data: Data?, val tag: String) {
                     val duration: Long,
                     val webUrl: WebUrl,
                     val library: String,
-                    val playInfo: Any,
-                    val consumption: Any,
+                    val playInfo: ArrayList<PlayInfo>,
+                    val consumption: Consumption,
                     val campaign: Any,
                     val waterMarks: Any,
                     val adTrack: Any,
@@ -40,16 +42,18 @@ data class Item(val type: String, val data: Data?, val tag: String) {
                     val subtitles: Any,
                     val lastViewTime: Any,
                     val playlists: Any
-    ) {
-        data class Tag(val id: Int, val name: String, val actionUrl: String, val adTrack: Any)
-        data class Author(val icon: String)
+    ) : Serializable {
+        data class Tag(val id: Int, val name: String, val actionUrl: String, val adTrack: Any) : Serializable
+        data class Author(val icon: String,val name:String,val description:String) : Serializable
 
-        data class Provider(val name: String, val alias: String, val icon: String)
+        data class Provider(val name: String, val alias: String, val icon: String) : Serializable
 
         data class Cover(val feed: String, val detail: String,
-                         val blurred: String, val sharing: String, val homepage: String)
+                         val blurred: String, val sharing: String, val homepage: String) : Serializable
 
-        data class WebUrl(val raw: String, val forWeibo: String)
+        data class WebUrl(val raw: String, val forWeibo: String) : Serializable
+        data class PlayInfo(val name: String, val url: String,val type:String) : Serializable
+        data class Consumption(val collectionCount: Int, val shareCount: Int,val replyCount:Int) : Serializable
 
     }
 }

@@ -1,4 +1,4 @@
-package com.xk.eyepetizer.ui.view
+package com.xk.eyepetizer.ui.view.home
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.mvp.model.bean.Item
+import com.xk.eyepetizer.timeFromat
 import kotlinx.android.synthetic.main.item_home_standard.view.*
 
 /**
@@ -62,24 +63,5 @@ class HomeStandardItem : FrameLayout {
         tv_category.setText(data?.category)
     }
 
-    fun timeFromat(duration: Long?): String {
-        val minute = duration!! / 60
-        val second = duration!! % 60
-        if (minute <= 9) {
-            if(second<=9){
-                return "0${minute}' 0${second}''"
-            }else{
-                return "0${minute}' ${second}''"
-            }
-        } else {
-            if(second<=9){
-                return "${minute}' 0${second}''"
-            }else{
-                return "${minute}' ${second}''"
-            }
-        }
 
-
-
-    }
 }

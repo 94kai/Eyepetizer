@@ -21,21 +21,23 @@ class HomePresenter(view: HomeContract.IView) : HomeContract.IPresenter {
         homeView = view
     }
 
-    override fun start() {
-    }
 
     override fun requestFirstData() {
         homeModel.loadFirstData()
                 .flatMap({ homeBean ->
+                    //也可以在这里过滤掉banner2，不过在homebanner里做了过滤，就懒得改了
                     bannerHomeBean = homeBean
-
                     homeModel.loadMoreData(homeBean.nextPageUrl)
                 })
                 .subscribe({ homeBean ->
                     nextPageUrl = homeBean.nextPageUrl
                     bannerHomeBean!!.issueList[0].count = bannerHomeBean!!.issueList[0].itemList.size
 
-                    bannerHomeBean?.issueList!![0].itemList.addAll(homeBean.issueList[0].itemList)
+                    //过滤掉banner2item
+                    val newItemList = homeBean.issueList[0].itemList
+                    newItemList.filter { item -> item.type == "banner2" }.forEach { item -> newItemList.remove(item)  }
+
+                    bannerHomeBean?.issueList!![0].itemList.addAll(newItemList)
                     homeView.setFirstData(bannerHomeBean!!)
                 }, { t ->
                     t.printStackTrace()
@@ -47,7 +49,11 @@ class HomePresenter(view: HomeContract.IView) : HomeContract.IPresenter {
         nextPageUrl?.let {
             homeModel.loadMoreData(it)
                     .subscribe({ homeBean ->
-                        homeView.setMoreData(homeBean)
+
+                        //过滤掉banner2item
+                        val newItemList = homeBean.issueList[0].itemList
+                        newItemList.filter { item -> item.type == "banner2" }.forEach { item -> newItemList.remove(item)  }
+                        homeView.setMoreData(newItemList)
                         nextPageUrl = homeBean.nextPageUrl
                     })
         }

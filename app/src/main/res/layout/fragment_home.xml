@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<com.xk.eyepetizer.ui.view.banner.HomeBanner-->
+    <!--<com.xk.eyepetizer.ui.view.home.HomeBanner-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content" />-->
 
-    <com.xk.eyepetizer.ui.view.PullRecyclerView
+    <com.xk.eyepetizer.ui.view.home.PullRecyclerView
         android:id="@+id/rv_home"
         android:layout_width="match_parent"
         android:clipToPadding="false"

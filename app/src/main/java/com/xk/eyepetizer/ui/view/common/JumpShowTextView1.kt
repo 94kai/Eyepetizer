@@ -1,4 +1,4 @@
-package com.xk.eyepetizer.ui.view
+package com.xk.eyepetizer.ui.view.common
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,9 +6,11 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
-import android.widget.FrameLayout
+import android.view.View
 import android.widget.LinearLayout
+import com.example.v1.xklibrary.LogUtil
 import com.xk.eyepetizer.io_main
+import com.xk.eyepetizer.util.DisplayManager
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -16,7 +18,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by xuekai on 2017/8/22.
  */
-class JumpShowTextView : FrameLayout {
+class JumpShowTextView1 : View {
     constructor(context: Context?) : this(context, null)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         init()
@@ -45,25 +47,26 @@ class JumpShowTextView : FrameLayout {
 
 
     private fun computeViewSize() {
+        var measureText=0f
         var paint = Paint()
-        paint.setTextSize(textSize);
+        paint.setTextSize(DisplayManager.getPaintSize(textSize.toInt())!!.toFloat())
         var rect = Rect()   // 使用上面的画笔最终绘制出字符串所占的矩形
         text?.let {
             paint.getTextBounds(it, 0, it.length, rect); // 四个参数分别为字符串，起始位置，结束位置，矩形
+             measureText = paint.measureText(it)
         }
-        val textWidth = rect.width()
+        val textWidth = measureText
         val textHeight = rect.height()
-        val layoutParams = LinearLayout.LayoutParams(textWidth+5, textHeight)//测量出来的稍微有一丢丢不准确，所以加5（大概是因为float转int缺失了？）
+        val layoutParams = LinearLayout.LayoutParams((textWidth + 15).toInt(), textHeight)//测量出来的不准确，遇到特殊符号就变化（大概是因为float转int缺失了？）左括号在开头，会有空格
         layoutParams.bottomMargin = marginBottom.toInt()
         this.layoutParams = layoutParams
-
         invalidate()
     }
 
 
     private fun init() {
         paint = Paint()
-        setBackgroundColor(0x00000000)
+        setBackgroundColor(0x00ff0000.toInt())
     }
 
     var subscribe: Disposable? = null
@@ -80,7 +83,7 @@ class JumpShowTextView : FrameLayout {
 
         text?.let {
             isRun = true
-            subscribe = Observable.interval(50, TimeUnit.MILLISECONDS)
+            subscribe = Observable.interval(100, TimeUnit.MILLISECONDS)
                     .take(it.length.toLong())
                     .io_main()
                     .subscribe({ i ->
@@ -95,6 +98,7 @@ class JumpShowTextView : FrameLayout {
 
 
     override fun onDraw(canvas: Canvas?) {
+        LogUtil.d("${right} ${left}-->-->onDraw");
         super.onDraw(canvas)
         val fontMetrics = paint?.getFontMetrics()
 

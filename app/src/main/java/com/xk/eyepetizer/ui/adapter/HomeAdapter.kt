@@ -3,11 +3,12 @@ package com.xk.eyepetizer.ui.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.xk.eyepetizer.mvp.model.bean.HomeBean
 import com.xk.eyepetizer.mvp.model.bean.Item
-import com.xk.eyepetizer.ui.view.HomeStandardItem
-import com.xk.eyepetizer.ui.view.HomeTextHeaderItem
-import com.xk.eyepetizer.ui.view.banner.HomeBanner
+import com.xk.eyepetizer.toActivityWithSerializable
+import com.xk.eyepetizer.ui.activity.DetailActivity
+import com.xk.eyepetizer.ui.view.home.HomeStandardItem
+import com.xk.eyepetizer.ui.view.home.HomeTextHeaderItem
+import com.xk.eyepetizer.ui.view.home.banner.HomeBanner
 import com.xk.eyepetizer.util.DisplayManager
 
 /**
@@ -29,8 +30,8 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     //banner用了的item的数量（包括type为banner2的）
     var bannerItemListCount = 0
 
-    fun addData(homeBean: HomeBean) {
-        itemList.addAll(homeBean.issueList[0].itemList)
+    fun addData(itemList: ArrayList<Item>) {
+        this.itemList.addAll(itemList)
         notifyDataSetChanged()
     }
 
@@ -44,9 +45,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
                 }
             }
             TYPE_STANDARD -> (holder?.itemView as HomeStandardItem).let {
+                it.setOnClickListener { v -> v.context.toActivityWithSerializable<DetailActivity>(itemList[position + bannerItemListCount - 1]) }
                 it.setData(itemList[position + bannerItemListCount - 1])
             }
-//            setText(itemList[position + bannerItemListCount - 1].data?.title)
 
             TYPE_HEADER_TEXT -> (holder?.itemView as HomeTextHeaderItem).setHeaderText(itemList[position + bannerItemListCount - 1].data?.text)
 
@@ -100,8 +101,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     }
 
 
-    fun setBannerSize(size:Int){
-        bannerItemListCount=size
+    fun setBannerSize(size: Int) {
+        bannerItemListCount = size
     }
+
     class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
 }

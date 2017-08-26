@@ -12,11 +12,12 @@ import com.xk.eyepetizer.R
 import com.xk.eyepetizer.TAG
 import com.xk.eyepetizer.mvp.contract.HomeContract
 import com.xk.eyepetizer.mvp.model.bean.HomeBean
+import com.xk.eyepetizer.mvp.model.bean.Item
 import com.xk.eyepetizer.mvp.presenter.HomePresenter
 import com.xk.eyepetizer.showToast
 import com.xk.eyepetizer.ui.adapter.HomeAdapter
 import com.xk.eyepetizer.ui.base.BaseFragment
-import com.xk.eyepetizer.ui.view.PullRecyclerView
+import com.xk.eyepetizer.ui.view.home.PullRecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
@@ -49,7 +50,6 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
         super.onViewCreated(view, savedInstanceState)
         initView()
         presenter.requestFirstData()
-
     }
 
     var loadingMore = false
@@ -128,9 +128,9 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
     }
 
 
-    override fun setMoreData(homeBean: HomeBean) {
+    override fun setMoreData(itemList: ArrayList<Item>) {
         loadingMore = false
-        homeAdapter.addData(homeBean)
+        homeAdapter.addData(itemList)
 
     }
 
@@ -146,15 +146,3 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
     }
 }
 
-fun main(args: Array<String>) {
-//    while (true) {
-//        val scanner = Scanner(System.`in`)
-//
-//        val nextLong = scanner.nextLong()
-//
-//        val format = simpleDateFormat.format(nextLong)
-//        print("xxxxxxxxxxx${format}")
-//
-//
-//    }
-}
