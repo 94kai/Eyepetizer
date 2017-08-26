@@ -2,6 +2,9 @@
 
 > **开眼视频**是一款精品短视频日报应用，该项目是用kotlin，借助已知的一些开眼接口写的一个仿《开眼App》，主要是为了学习kotlin和一些UI效果
 
+
+#### APK[点击这里](https://github.com/kaikaixue/Eyepetizer/blob/master/apk/app-debug.apk)
+
 - kotlin（java出身，功底不够，未能对kotlin有深刻的理解，一边写，一遍领悟吧，多多指正）
 - rxjava
 - retrofit
