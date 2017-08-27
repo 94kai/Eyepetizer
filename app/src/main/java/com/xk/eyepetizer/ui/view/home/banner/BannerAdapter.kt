@@ -1,6 +1,5 @@
 package com.xk.eyepetizer.ui.view.home.banner
 
-import android.content.Context
 import android.support.v4.view.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import com.xk.eyepetizer.ui.activity.DetailActivity
 /**
  * Created by xuekai on 2017/8/21.
  */
-class BannerAdapter(context: Context) : PagerAdapter() {
+class BannerAdapter : PagerAdapter() {
     var datas: ArrayList<Item>? = null
     var viewList: ArrayList<HomeBannerItem> = ArrayList()
 

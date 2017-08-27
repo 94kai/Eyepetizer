@@ -8,7 +8,7 @@ import com.xk.eyepetizer.util.DisplayManager
 /**
  * Created by xuekai on 2017/8/25.
  */
-class DetailPresenter(view: DetailContract.IView,val itemData: Item) : DetailContract.IPresenter {
+class DetailPresenter(view: DetailContract.IView) : DetailContract.IPresenter {
 
 
     val detailView: DetailContract.IView
@@ -17,19 +17,18 @@ class DetailPresenter(view: DetailContract.IView,val itemData: Item) : DetailCon
     }
 
 
-
     init {
         detailView = view
     }
 
-    override fun requestBasicDataFromMemory() {
+    override fun requestBasicDataFromMemory(itemData: Item) {
         //设置背景
         val url = itemData.data?.cover?.blurred + "/thumbnail/${DisplayManager.getScreenHeight()!! - DisplayManager.dip2px(250f)!!}x${DisplayManager.getScreenWidth()}"
         detailView.setBackground(url)
 
         //设置播放器
         // TODO: by xk 2017/8/25 15:02 wifi 播放高清、流量播放标清
-        val playUrl= itemData.data?.playInfo!![0].url
+        val playUrl = itemData.data?.playInfo!![0].url
         detailView.setPlayer(playUrl)
 
         //设置影片信息
@@ -43,9 +42,18 @@ class DetailPresenter(view: DetailContract.IView,val itemData: Item) : DetailCon
 
 
     override fun requestRelatedData(id: Int) {
-            detailModel.loadRelatedData(id)
-                    .subscribe({issue ->  detailView.setRelated(issue.itemList)})
+        detailModel.loadRelatedData(id)
+                .subscribe({ issue -> detailView.setRelated(issue.itemList) })
     }
 
+    override fun requestDetailMoreList(url: String?,title:String) {
+        detailView.showMoreList(title)
+        url?.let {
+            detailModel.loadDetailMoreList(url)
+                    .subscribe({ issue -> detailView.setMoreList(issue) })
+        }
+
+
+    }
 
 }

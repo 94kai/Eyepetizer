@@ -2,6 +2,7 @@ package com.xk.eyepetizer.mvp.contract
 
 import com.xk.eyepetizer.mvp.base.BasePresenter
 import com.xk.eyepetizer.mvp.base.BaseView
+import com.xk.eyepetizer.mvp.model.bean.Issue
 import com.xk.eyepetizer.mvp.model.bean.Item
 
 /**
@@ -13,7 +14,7 @@ interface DetailContract {
         /**
          * 设置播放器
          */
-        fun setPlayer(playUrl:String)
+        fun setPlayer(playUrl: String)
 
         /**
          * 设置影片信息/作者信息
@@ -24,9 +25,18 @@ interface DetailContract {
         /**
          * 设置相关视频
          */
-        fun setRelated(items:ArrayList<Item>)
+        fun setRelated(items: ArrayList<Item>)
 
-        fun setBackground(url:String)
+        fun setBackground(url: String)
+
+        /**
+         * 显示相关推荐之类的全部的view
+         */
+        fun showMoreList(title: String)
+        /**
+         * 设置相关推荐之类的全部的view的数据
+         */
+        fun setMoreList(issue: Issue)
     }
 
     interface IPresenter : BasePresenter {
@@ -38,6 +48,12 @@ interface DetailContract {
         /**
          * 从内存中获取基础数据（影片信息、作者信息等）
          */
-        fun requestBasicDataFromMemory()
+        fun requestBasicDataFromMemory(itemData: Item)
+
+        /**
+         * 请求more相关推荐之类的数据
+         */
+        fun requestDetailMoreList(url: String?,title:String)
+
     }
 }

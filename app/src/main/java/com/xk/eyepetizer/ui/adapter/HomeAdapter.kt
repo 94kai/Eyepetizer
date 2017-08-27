@@ -93,7 +93,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
             TYPE_HEADER_TEXT -> {
                 val headerText = HomeTextHeaderItem(parent!!.context)
                 headerText.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
-                        DisplayManager?.dip2px(56f)!!)
+                        DisplayManager.dip2px(56f)!!)
                 return ViewHolder(headerText)
             }
             else -> return ViewHolder(null)

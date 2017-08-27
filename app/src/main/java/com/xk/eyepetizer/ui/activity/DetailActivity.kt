@@ -5,33 +5,57 @@ import android.graphics.Matrix
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.mvp.contract.DetailContract
+import com.xk.eyepetizer.mvp.model.bean.Issue
 import com.xk.eyepetizer.mvp.model.bean.Item
 import com.xk.eyepetizer.mvp.presenter.DetailPresenter
+import com.xk.eyepetizer.showToast
 import com.xk.eyepetizer.ui.adapter.DetailAdapter
+import com.xk.eyepetizer.ui.view.detail.*
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.layout_detail_more_listview.view.*
 
 
 class DetailActivity : AppCompatActivity(), DetailContract.IView {
+
+
     lateinit var presenter: DetailPresenter
     val adapter by lazy { DetailAdapter() }
-
+    val itemData: Item by lazy {
+        intent.getSerializableExtra("data") as Item
+    }
 
     private fun initView() {
         rv_detail.layoutManager = LinearLayoutManager(this)
         rv_detail.adapter = adapter
+        initListener()
+    }
+
+    private fun initListener() {
+        adapter.setOnItemClick({ presenter.requestBasicDataFromMemory(it) },
+                { url, title -> presenter.requestDetailMoreList(url!!, title!!) },
+                {
+                    when (it) {
+                        BTN_AUTHOR -> showToast("跳到作者")
+                        BTN_DOWLOAD -> showToast("下载（未实现）")
+                        BTN_REPLY -> showToast("回复（未实现）")
+                        BTN_FAVORITES -> showToast("喜欢（未实现）")
+                        BTN_WATCH -> showToast("加关注（未实现）")
+                        BTN_SHARE -> showToast("分享（未实现）")
+                    }
+                })
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val itemData = intent.getSerializableExtra("data")
-        setPresenter(DetailPresenter(this, itemData as Item))
+        setPresenter(DetailPresenter(this))
         setContentView(R.layout.activity_detail)
         initView()
         loadData()
@@ -39,7 +63,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
 
 
     private fun loadData() {
-        presenter.requestBasicDataFromMemory()
+        presenter.requestBasicDataFromMemory(itemData)
     }
 
     override fun setPresenter(presenter: DetailContract.IPresenter) {
@@ -58,7 +82,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
     }
 
 
-    override fun setRelated(items:ArrayList<Item>) {
+    override fun setRelated(items: ArrayList<Item>) {
         adapter.addData(items)
     }
 
@@ -81,5 +105,15 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
                     }
                 })
                 .format(DecodeFormat.PREFER_ARGB_8888).centerCrop().into(background)
+    }
+
+    override fun showMoreList(title: String) {
+        rv_detail.visibility = View.GONE
+        detailMoreListView.visibility = View.VISIBLE
+        detailMoreListView.title.text = title
+    }
+
+    override fun setMoreList(issue: Issue) {
+        showToast("设置数据")
     }
 }

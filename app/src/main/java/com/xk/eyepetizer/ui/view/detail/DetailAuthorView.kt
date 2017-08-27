@@ -22,6 +22,8 @@ class DetailAuthorView : RelativeLayout {
         init()
     }
 
+    var onAuthorClick: ((Int) -> Unit)? = null
+
     private fun init() {
         View.inflate(context, R.layout.layout_detail_author_info, this)
 
@@ -32,15 +34,22 @@ class DetailAuthorView : RelativeLayout {
         this.tv_author_intro.color = Color.WHITE
         this.tv_author_intro.textSize = 30f
         this.tv_author_intro.singline = true
+
+        initListner()
     }
 
-    fun setAuthorName(name: String?,playAnimation:Boolean) {
+    private fun initListner() {
+        attention.setOnClickListener { onAuthorClick?.invoke(BTN_WATCH) }
+        setOnClickListener { onAuthorClick?.invoke(BTN_AUTHOR) }
+    }
+
+    fun setAuthorName(name: String?, playAnimation: Boolean) {
         this.tv_author_name.withAnimation = playAnimation
         this.tv_author_name.text = name
     }
 
 
-    fun setIntro(intro: String?,playAnimation:Boolean) {
+    fun setIntro(intro: String?, playAnimation: Boolean) {
         this.tv_author_intro.withAnimation = playAnimation
         this.tv_author_intro.text = intro
     }

@@ -29,6 +29,9 @@
 - ViewPage中有视频播放、图片展示两种类型
 
 #### 详情页
+
+写到详情页，kotlin也写了几天了，感觉对于kotlin特性的运用（比如函数参数）比每日精选那块要熟悉一点了，继续努力
+
 效果如图：
 
 ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/detail.gif)

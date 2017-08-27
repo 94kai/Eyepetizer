@@ -27,6 +27,12 @@ interface ApiService {
 
 
     /**
+     * issue里面包了itemlist和nextpageurl
+     */
+    @GET
+    fun getIssue(@Url url: String): Observable<Issue>
+
+    /**
      * 根据item id获取相关视频
      */
     @GET("v4/video/related?")

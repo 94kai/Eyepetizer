@@ -36,7 +36,7 @@ class HomeBanner : FrameLayout {
 
     }
 
-    private val bannerAdapter: BannerAdapter by lazy { BannerAdapter(context) }
+    private val bannerAdapter: BannerAdapter by lazy { BannerAdapter() }
     private val viewPager: ViewPager by lazy { ViewPager(context) }
     private val indicators: LinearLayout by lazy { LinearLayout(context) }
     private val tvTitle: JumpShowTextView by lazy { JumpShowTextView(context) }
@@ -131,7 +131,7 @@ class HomeBanner : FrameLayout {
 
     fun setIndicators(bannerDatas: ArrayList<Item>) {
         indicators.removeAllViews()
-        bannerDatas.forEach { item ->
+        bannerDatas.forEach { _ ->
             val indicator = Indicator(context)
             val layoutParams = LinearLayout.LayoutParams(DisplayManager.getRealHeight(20)!!, DisplayManager.getRealHeight(20)!!)
             layoutParams.leftMargin = DisplayManager.getRealWidth(10)!!

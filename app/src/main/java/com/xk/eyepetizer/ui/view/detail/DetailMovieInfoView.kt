@@ -16,7 +16,18 @@ class DetailMovieInfoView : LinearLayout {
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init()
+        initListner()
+
     }
+
+    private fun initListner() {
+        tv_favorites.setOnClickListener { onMovieClick?.invoke(BTN_FAVORITES) }
+        tv_share.setOnClickListener { onMovieClick?.invoke(BTN_SHARE) }
+        tv_reply.setOnClickListener { onMovieClick?.invoke(BTN_REPLY) }
+        tv_download.setOnClickListener { onMovieClick?.invoke(BTN_DOWLOAD) }
+    }
+
+    var onMovieClick: ((Int) -> Unit)? = null
 
     private fun init() {
         View.inflate(context, R.layout.layout_detail_movie_info, this)

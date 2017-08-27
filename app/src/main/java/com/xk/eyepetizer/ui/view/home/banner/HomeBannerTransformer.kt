@@ -11,7 +11,7 @@ class HomeBannerTransformer : ViewPager.PageTransformer {
         val width: Int = page?.width!!
         //以向左滑动为例
 //        if (position <= 0) {//中间的
-        page?.scrollX = (position * width).toInt() / 4 * 3
+        page.scrollX = (position * width).toInt() / 4 * 3
 //        } else if (position <= 1) {//右侧的
 //            page?.scrollX = (position * width).toInt() / 4 * 3
 

@@ -25,7 +25,7 @@ class MainActivity : BaseActivity() {
     private fun setRadio() {
         rb_home.isChecked = true
         chooseFragment(R.id.rb_home)
-        rg_root.setOnCheckedChangeListener { group, checkedId -> chooseFragment(checkedId) }
+        rg_root.setOnCheckedChangeListener { _, checkedId -> chooseFragment(checkedId) }
     }
 
     private fun chooseFragment(checkedId: Int) {
@@ -40,16 +40,15 @@ class MainActivity : BaseActivity() {
             }
         }
         tabs.forEach { tab ->
-            val beginTransaction = beginTransaction
 
-            val fragment: Fragment? = fragmentManager.findFragmentByTag(tab.toString())
+            val aFragment: Fragment? = fragmentManager.findFragmentByTag(tab.toString())
 
             if (tab == checkedId) {
-                fragment?.let {
+                aFragment?.let {
                     beginTransaction.show(it)
                 }
             } else {
-                fragment?.let {
+                aFragment?.let {
                     beginTransaction.hide(it)
                 }
             }

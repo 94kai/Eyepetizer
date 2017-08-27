@@ -33,9 +33,9 @@ class PercentTextView : android.support.v7.widget.AppCompatTextView {
     }
 
     override fun setTextSize(unit: Int, size: Float) {
-        var size = size
-        size = (size * mTextSizePercent).toInt().toFloat()
-        super.setTextSize(unit, size)
+        var varSize = size
+        varSize = (varSize * mTextSizePercent).toInt().toFloat()
+        super.setTextSize(unit, varSize)
     }
 
     override fun setPaintFlags(flags: Int) {

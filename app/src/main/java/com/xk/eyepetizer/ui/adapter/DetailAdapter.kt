@@ -8,6 +8,7 @@ import com.xk.eyepetizer.ui.view.detail.DetailEndItem
 import com.xk.eyepetizer.ui.view.detail.DetailInfoItem
 import com.xk.eyepetizer.ui.view.detail.DetailTextCardView
 import com.xk.eyepetizer.ui.view.detail.DetailVideoCardView
+import java.net.URLDecoder
 
 /**
  * Created by xuekai on 2017/8/25.
@@ -31,6 +32,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
      */
     fun addData(item: Item) {
         data.clear()
+        notifyDataSetChanged()
         data.add(item)
         notifyItemInserted(0)
     }
@@ -48,6 +50,8 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
         when (getItemViewType(position)) {
             TYPE_TEXT_CARD -> {
                 (itemView as DetailTextCardView).setText(data[position])
+                itemView.setOnClickListener { onCategoryTitleClick?.invoke(URLDecoder.decode(data[position].data?.actionUrl?.split("&url=")!![1], "utf-8"),data[position].data?.text) }
+
             }
             TYPE_VIDEO_CARD -> {
                 val hasPlay = hasPlayAnimationList.contains(position)
@@ -55,16 +59,20 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
                     hasPlayAnimationList.add(position)
                 }
                 (itemView as DetailVideoCardView).setData(data[position], !hasPlay)
+                itemView.setOnClickListener { onVideoClick?.invoke(data[position]) }
             }
             TYPE_INFO_CARD -> {
                 val hasPlay = hasPlayAnimationList.contains(position)
                 if (!hasPlay) {
                     hasPlayAnimationList.add(position)
                 }
-                (itemView as DetailInfoItem).setData(data[position], !hasPlay)
+                (itemView as DetailInfoItem).let {
+                    it.setData(data[position], !hasPlay)
+                    it.onMovieAuthorClick = onMovieAuthorClick
+                }
             }
             TYPE_END_CARD -> {
-                (itemView as DetailEndItem).setShow(data.size>1)
+                (itemView as DetailEndItem).setShow(data.size > 1)
             }
             else -> {
                 throw IllegalArgumentException("日狗，api蒙错了，出现了第三种情况")
@@ -73,7 +81,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        var itemView: View? = null
+        var itemView: View
         when (viewType) {
             TYPE_TEXT_CARD -> {
                 itemView = DetailTextCardView(parent?.context)
@@ -86,7 +94,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
             }
             TYPE_END_CARD -> {
                 itemView = DetailEndItem(parent?.context)
-                itemView.layoutParams=RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.WRAP_CONTENT)
+                itemView.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
             }
             else -> {
                 throw IllegalArgumentException("日狗，api蒙错了，出现了第三种情况")
@@ -114,5 +122,26 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
 
 
     class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+
+
+    var onVideoClick: ((Item) -> Unit)? = null
+    /**
+     * 第一个参数为url 第二个是title
+     */
+    var onCategoryTitleClick: ((String?,String?) -> Unit)? = null
+
+    /**
+     * movieinfo authorinfo里的按钮被点击
+     */
+    var onMovieAuthorClick: ((Int) -> Unit)? = null
+
+    fun setOnItemClick(onVideoClick: (Item) -> Unit = {},
+                       onCategoryTitleClick: (String?,String?) -> Unit = {_,_->},
+                       onMovieAuthorClick: (Int) -> Unit) {
+        this.onVideoClick = onVideoClick
+        this.onCategoryTitleClick = onCategoryTitleClick
+        this.onMovieAuthorClick = onMovieAuthorClick
+    }
+
 }
 

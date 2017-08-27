@@ -102,7 +102,7 @@ class JumpShowTextView1 : View {
         super.onDraw(canvas)
         val fontMetrics = paint?.getFontMetrics()
 
-        val centerPoint = measuredHeight / 2 - (fontMetrics!!.top + fontMetrics?.bottom) / 2
+        val centerPoint = measuredHeight / 2 - (fontMetrics!!.top + fontMetrics.bottom) / 2
 //drawText的第二个参数的值=要让文字的中心放在哪-（fontMetrics.top+fontMetrics.bottom）/2
 //此时求出来的baseline可以使文字竖直居中
 

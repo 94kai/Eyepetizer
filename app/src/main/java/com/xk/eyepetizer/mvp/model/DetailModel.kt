@@ -15,4 +15,8 @@ class DetailModel {
         return Network.service.getRelatedData(id).io_main()
     }
 
+    fun loadDetailMoreList(url:String): Observable<Issue> {
+        return Network.service.getIssue(url).io_main()
+    }
+
 }

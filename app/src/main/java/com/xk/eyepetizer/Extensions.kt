@@ -58,7 +58,7 @@ fun <T> Observable<T>.io_main(): Observable<T> {
 
 fun View.timeFromat(duration: Long?): String {
     val minute = duration!! / 60
-    val second = duration!! % 60
+    val second = duration % 60
     if (minute <= 9) {
         if (second <= 9) {
             return "0${minute}' 0${second}''"

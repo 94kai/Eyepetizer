@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.xk.eyepetizer.ui.view.common.PercentTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center_vertical"
+        android:text="测试数据推荐"
+        android:textColor="@color/white"
+        android:textSize="44px"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignBottom="@id/title"
+        android:background="#55ffffff" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_action_down" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rv_detail_more"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line"
+        android:overScrollMode="never" />
+</RelativeLayout>

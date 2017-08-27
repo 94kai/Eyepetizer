@@ -10,7 +10,7 @@
     <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"></com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer>
+        android:layout_height="250dp"/>
 
     <ImageView
         android:id="@+id/background"
@@ -21,9 +21,16 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_detail"
-        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/videoView" />
+        android:layout_below="@id/videoView"
+        android:overScrollMode="never" />
 
+    <com.xk.eyepetizer.ui.view.detail.DetailMoreListView
+        android:id="@+id/detailMoreListView"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/videoView"
+        />
 </RelativeLayout>
