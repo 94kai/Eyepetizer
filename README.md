@@ -37,10 +37,11 @@
 ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/detail.gif)
 
 - item第一次加载的时候，文字跳跃出现，之后不会再跳跃
+- 查看更多相关视频
+- 支持查看评论
 
 ##### TODO: 
-- 相关视频点击切换数据
-- 打开某个类别的全部数据
+
 - 进入作者页面
 - 播放器生命周期控制
 - 根据当前网络状态（流量、wifi）决定播放高清、标清视频

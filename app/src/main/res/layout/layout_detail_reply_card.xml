@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.xk.eyepetizer.ui.view.common.PercentTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_like"
+            android:layout_marginTop="15dp"
+            android:textSize="40px"
+            android:textColor="@color/white"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:drawableRight="@mipmap/ic_action_like" />
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp" />
+
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:orientation="vertical">
+
+            <com.xk.eyepetizer.ui.view.common.PercentTextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:textSize="40px"
+                android:textStyle="bold" />
+
+            <com.xk.eyepetizer.ui.view.common.PercentTextView
+                android:id="@+id/tv_reply"
+                android:layout_marginRight="45dp"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_height="wrap_content"
+                android:textColor="#aaffffff"
+                android:textSize="35px" />
+            <com.xk.eyepetizer.ui.view.common.PercentTextView
+                android:id="@+id/tv_message"
+                android:layout_marginRight="45dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="40px" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/parentReply"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#55000000"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="60dp">
+
+        <ImageView
+            android:id="@+id/iv_parentreply_avatar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp" />
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@id/iv_parentreply_avatar"
+            android:orientation="vertical">
+
+            <com.xk.eyepetizer.ui.view.common.PercentTextView
+                android:id="@+id/tv_parentreply_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/white"
+                android:textSize="35px"
+                android:textStyle="bold" />
+
+            <com.xk.eyepetizer.ui.view.common.PercentTextView
+                android:id="@+id/tv_parentreply_message"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="35px" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+    <com.xk.eyepetizer.ui.view.common.PercentTextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#aaffffff"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="60dp"
+        android:textSize="40px" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="60dp"
+        android:background="#55ffffff" />
+</LinearLayout>

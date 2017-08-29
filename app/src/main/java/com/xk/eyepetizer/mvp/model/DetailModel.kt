@@ -11,12 +11,18 @@ import io.reactivex.Observable
  */
 class DetailModel {
 
-    fun loadRelatedData(id:Int): Observable<Issue> {
+    fun loadRelatedData(id:Long): Observable<Issue> {
         return Network.service.getRelatedData(id).io_main()
     }
 
-    fun loadDetailMoreList(url:String): Observable<Issue> {
+    fun loadDetailMoreRelatedList(url:String): Observable<Issue> {
         return Network.service.getIssue(url).io_main()
     }
 
+    fun loadReplyList(videoId:Long): Observable<Issue> {
+        return Network.service.getReply(videoId).io_main()
+    }
+    fun loadMoreReplyList(url:String): Observable<Issue> {
+        return Network.service.getIssue(url).io_main()
+    }
 }

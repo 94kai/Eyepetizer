@@ -8,7 +8,7 @@ import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.mvp.model.bean.Item
-import com.xk.eyepetizer.timeFromat
+import com.xk.eyepetizer.durationFormat
 import kotlinx.android.synthetic.main.layout_detail_video_card.view.*
 
 /**
@@ -42,7 +42,7 @@ class DetailVideoCardView : RelativeLayout {
         this.tv_title.withAnimation = playAnimation
         this.tv_tag.withAnimation = playAnimation
         this.tv_title.text = item.data?.title
-        this.tv_tag.text = "#${item.data?.category}  /  ${timeFromat(item.data?.duration)} ${if (item.data?.library == "DAILY") " /  开眼精选" else ""}"
+        this.tv_tag.text = "#${item.data?.category}  /  ${durationFormat(item.data?.duration)} ${if (item.data?.library == "DAILY") " /  开眼精选" else ""}"
 
     }
 

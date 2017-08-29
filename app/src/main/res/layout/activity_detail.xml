@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root"
     tools:context="com.xk.eyepetizer.ui.activity.DetailActivity">
 
 
@@ -16,8 +17,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/videoView"
-        android:background="#636363" />
+        android:layout_below="@id/videoView" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_detail"
@@ -26,11 +26,11 @@
         android:layout_below="@id/videoView"
         android:overScrollMode="never" />
 
-    <com.xk.eyepetizer.ui.view.detail.DetailMoreListView
-        android:id="@+id/detailMoreListView"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/videoView"
-        />
+    <!--<com.xk.eyepetizer.ui.view.detail.DetailDropDownView-->
+        <!--android:id="@+id/dropDownView"-->
+        <!--android:visibility="invisible"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/videoView"-->
+        <!--/>-->
 </RelativeLayout>

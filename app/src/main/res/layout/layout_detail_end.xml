@@ -6,7 +6,7 @@
     <com.xk.eyepetizer.ui.view.common.PercentTextView
         android:id="@+id/tv_text_end"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:gravity="center"
         android:layout_gravity="center"
         android:text="-The End-"

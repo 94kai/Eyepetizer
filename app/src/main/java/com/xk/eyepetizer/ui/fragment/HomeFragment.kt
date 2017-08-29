@@ -103,7 +103,6 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
      */
     private fun setupToolbar() {
         val findFirstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()
-        //
         if (findFirstVisibleItemPosition == 0) {//设置为透明
             activity.toolbar.setBackgroundColor(0x00000000)
             activity.iv_search.setImageResource(R.mipmap.ic_action_search_white)
@@ -120,7 +119,6 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
                 activity.tv_bar_title.setText(simpleDateFormat.format(item.data?.date))
             }
         }
-
     }
 
     fun onLoadMore() {
@@ -131,7 +129,6 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
     override fun setMoreData(itemList: ArrayList<Item>) {
         loadingMore = false
         homeAdapter.addData(itemList)
-
     }
 
     override fun setFirstData(homeBean: HomeBean) {

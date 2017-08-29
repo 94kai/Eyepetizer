@@ -28,7 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="40dp">
+        >
 
         <com.xk.eyepetizer.ui.view.common.PercentTextView
             android:id="@+id/tv_favorites"

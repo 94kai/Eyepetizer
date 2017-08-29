@@ -4,6 +4,7 @@ import com.xk.eyepetizer.mvp.base.BasePresenter
 import com.xk.eyepetizer.mvp.base.BaseView
 import com.xk.eyepetizer.mvp.model.bean.Issue
 import com.xk.eyepetizer.mvp.model.bean.Item
+import io.reactivex.disposables.Disposable
 
 /**
  * 详情页的契约接口，统一管理view和presenter中的接口，使得二者的功能一目了然
@@ -32,28 +33,51 @@ interface DetailContract {
         /**
          * 显示相关推荐之类的全部的view
          */
-        fun showMoreList(title: String)
+        fun showDropDownView(title: String)
+
         /**
          * 设置相关推荐之类的全部的view的数据
          */
-        fun setMoreList(issue: Issue)
+        fun setDropDownView(issue: Issue)
+
+        /**
+         * 设置相关推荐之类的全部的view的数据(底部加载更多)
+         */
+        fun setMoreDropDownView(issue: Issue?)
+
+
     }
 
     interface IPresenter : BasePresenter {
         /**
          * 请求相关视频数据
          */
-        fun requestRelatedData(id: Int)
+        fun requestRelatedData(id: Long): Disposable?
 
         /**
          * 从内存中获取基础数据（影片信息、作者信息等）
          */
-        fun requestBasicDataFromMemory(itemData: Item)
+        fun requestBasicDataFromMemory(itemData: Item): Disposable?
 
         /**
-         * 请求more相关推荐之类的数据
+         * 请求相关推荐之类的数据
          */
-        fun requestDetailMoreList(url: String?,title:String)
+        fun requestRelatedAllList(url: String?, title: String): Disposable?
+
+        /**
+         * 请求相关推荐之类的数据的更多数据
+         */
+        fun requestRelatedAllMoreList(): Disposable?
+
+        /**
+         * 请求评论数据
+         */
+        fun requestReply(videoId: Long): Disposable?
+
+        /**
+         * 请求更多评论数据
+         */
+        fun requestMoreReply(): Disposable?
 
     }
 }

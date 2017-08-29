@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.mvp.model.bean.Item
-import com.xk.eyepetizer.timeFromat
+import com.xk.eyepetizer.durationFormat
 import kotlinx.android.synthetic.main.item_home_standard.view.*
 
 /**
@@ -57,7 +57,7 @@ class HomeStandardItem : FrameLayout {
         tv_title.setText(item.data?.title)
         var tagText = ""
         data?.tags?.take(4)?.forEach { tagText += (it.name + " / ") }
-        val timeFromat = timeFromat(data?.duration)
+        val timeFromat = durationFormat(data?.duration)
         tagText += timeFromat
         tv_tag.setText(tagText)
         tv_category.setText(data?.category)

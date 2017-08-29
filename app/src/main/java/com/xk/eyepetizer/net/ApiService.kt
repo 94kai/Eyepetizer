@@ -32,9 +32,16 @@ interface ApiService {
     @GET
     fun getIssue(@Url url: String): Observable<Issue>
 
+
+    /**
+     * 获取回复
+     */
+    @GET("v2/replies/video?")
+    fun getReply(@Query("videoId") videoId: Long): Observable<Issue>
+
     /**
      * 根据item id获取相关视频
      */
     @GET("v4/video/related?")
-    fun getRelatedData(@Query("id") id: Int): Observable<Issue>
+    fun getRelatedData(@Query("id") id: Long): Observable<Issue>
 }

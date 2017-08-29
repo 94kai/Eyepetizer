@@ -5,7 +5,13 @@ import android.graphics.Matrix
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
+import android.support.v7.widget.RecyclerView
+import android.util.Log
+import android.view.ViewTreeObserver
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
+import android.widget.RelativeLayout
+import com.bumptech.glide.BitmapRequestBuilder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
@@ -18,38 +24,42 @@ import com.xk.eyepetizer.mvp.presenter.DetailPresenter
 import com.xk.eyepetizer.showToast
 import com.xk.eyepetizer.ui.adapter.DetailAdapter
 import com.xk.eyepetizer.ui.view.detail.*
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.layout_detail_more_listview.view.*
+import kotlinx.android.synthetic.main.layout_detail_drop_down.view.*
+import java.util.*
 
-
+// TODO: by xk 2017/8/28 17:32 更多视频里面的点击事件  评论
 class DetailActivity : AppCompatActivity(), DetailContract.IView {
 
 
     lateinit var presenter: DetailPresenter
     val adapter by lazy { DetailAdapter() }
-    val itemData: Item by lazy {
-        intent.getSerializableExtra("data") as Item
-    }
-
+    var itemData: Item? = null
+    val dropDownViews = Stack<DetailDropDownView>()
+    var backgroundBuilder: BitmapRequestBuilder<String, Bitmap>? = null
     private fun initView() {
         rv_detail.layoutManager = LinearLayoutManager(this)
         rv_detail.adapter = adapter
+
+
         initListener()
     }
 
     private fun initListener() {
         adapter.setOnItemClick({ presenter.requestBasicDataFromMemory(it) },
-                { url, title -> presenter.requestDetailMoreList(url!!, title!!) },
+                { url, title -> dropDownDisPoseable = presenter.requestRelatedAllList(url!!, title!!) },
                 {
                     when (it) {
                         BTN_AUTHOR -> showToast("跳到作者")
                         BTN_DOWLOAD -> showToast("下载（未实现）")
-                        BTN_REPLY -> showToast("回复（未实现）")
+                        BTN_REPLY -> presenter.requestReply(itemData?.data?.id!!)
                         BTN_FAVORITES -> showToast("喜欢（未实现）")
                         BTN_WATCH -> showToast("加关注（未实现）")
                         BTN_SHARE -> showToast("分享（未实现）")
                     }
                 })
+
     }
 
 
@@ -63,7 +73,8 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
 
 
     private fun loadData() {
-        presenter.requestBasicDataFromMemory(itemData)
+        itemData = intent.getSerializableExtra("data") as Item
+        presenter.requestBasicDataFromMemory(itemData!!)
     }
 
     override fun setPresenter(presenter: DetailContract.IPresenter) {
@@ -78,6 +89,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
     }
 
     override fun setMovieAuthorInfo(info: Item) {
+        itemData = info
         adapter.addData(info)
     }
 
@@ -87,33 +99,141 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
     }
 
     override fun setBackground(url: String) {
-        Glide.with(this).load(url).asBitmap()
-                .transform(object : BitmapTransformation(this) {
-                    override fun getId(): String {
-                        return ""
-                    }
+        if (backgroundBuilder == null) {
+            backgroundBuilder = Glide.with(this).load(url).asBitmap()
+                    .transform(object : BitmapTransformation(this) {
+                        override fun getId(): String {
+                            return ""
+                        }
 
-                    override fun transform(pool: BitmapPool?, toTransform: Bitmap?, outWidth: Int, outHeight: Int): Bitmap {
-                        //如果想让图片旋转 非常简单，主要借助于Matrix对象:矩阵对象，将图片转化成像素矩阵。
-                        val matrix = Matrix()
-                        //执行旋转，参数为旋转角度
-                        matrix.postRotate(90f)
-                        //将图形的像素点按照这个矩阵进行旋转
-                        //将矩阵加载到bitmap对象上，进行输出就可以了  如何创建Bitmap对象
-                        //待旋转的bitmap对象，待旋转图片的宽度，待旋转图片的高度
-                        return Bitmap.createBitmap(toTransform, 0, 0, toTransform!!.getWidth(), toTransform.getHeight(), matrix, true)
-                    }
-                })
-                .format(DecodeFormat.PREFER_ARGB_8888).centerCrop().into(background)
+                        override fun transform(pool: BitmapPool?, toTransform: Bitmap?, outWidth: Int, outHeight: Int): Bitmap {
+                            //如果想让图片旋转 非常简单，主要借助于Matrix对象:矩阵对象，将图片转化成像素矩阵。
+                            val matrix = Matrix()
+                            //执行旋转，参数为旋转角度
+                            matrix.postRotate(90f)
+                            //将图形的像素点按照这个矩阵进行旋转
+                            //将矩阵加载到bitmap对象上，进行输出就可以了  如何创建Bitmap对象
+                            //待旋转的bitmap对象，待旋转图片的宽度，待旋转图片的高度
+                            return Bitmap.createBitmap(toTransform, 0, 0, toTransform!!.getWidth(), toTransform.getHeight(), matrix, true)
+                        }
+                    })
+                    .format(DecodeFormat.PREFER_ARGB_8888).centerCrop()
+        }
+
+        backgroundBuilder?.into(background)
     }
 
-    override fun showMoreList(title: String) {
-        rv_detail.visibility = View.GONE
-        detailMoreListView.visibility = View.VISIBLE
-        detailMoreListView.title.text = title
+    var loadingMore = false
+
+    override fun showDropDownView(title: String) {
+        val detailDropDownView = DetailDropDownView(this)
+        detailDropDownView.title.text = title
+        val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
+        layoutParams.addRule(RelativeLayout.BELOW, videoView.id)
+        detailDropDownView.layoutParams = layoutParams
+        backgroundBuilder?.into(detailDropDownView.iv_background)
+        root.addView(detailDropDownView)
+        dropDownViews.push(detailDropDownView)
+        playDropDownAnimation(detailDropDownView, true)
+        detailDropDownView.closeButton.setOnClickListener { closeDropDownView() }
+
+
+        detailDropDownView.rv_detail_more.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val childCount = detailDropDownView.rv_detail_more.getChildCount()
+                    val itemCount = detailDropDownView.rv_detail_more.layoutManager.getItemCount()
+                    val firstVisibleItem = (detailDropDownView.rv_detail_more.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    if (firstVisibleItem + childCount == itemCount) {
+                        Log.d(com.xk.eyepetizer.TAG, "到底了");
+                        if (!loadingMore) {
+                            loadingMore = true
+                            onLoadMore(title)
+                        }
+                    }
+                }
+            }
+        })
+
+        detailDropDownView.onVideoClick = { item ->
+            closeDropDownView()
+            presenter.requestBasicDataFromMemory(item)
+        }
     }
 
-    override fun setMoreList(issue: Issue) {
-        showToast("设置数据")
+    //dropdown里请求的数据的disposable，需要在销毁的时候dispose
+    var dropDownDisPoseable: Disposable? = null
+
+    fun onLoadMore(title: String) {
+        if (title.contains("评论")) {
+            dropDownDisPoseable = presenter.requestMoreReply()
+        } else {
+            dropDownDisPoseable = presenter.requestRelatedAllMoreList()
+        }
+    }
+
+    var dropDownHeight = 0
+
+    fun playDropDownAnimation(view: DetailDropDownView, show: Boolean) {
+        var translateAnimation: Animation
+        if ((dropDownHeight == 0)) {
+            view.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    if (dropDownHeight != 0) {
+                        view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    } else {
+                        dropDownHeight = view.height
+
+                        translateAnimation = TranslateAnimation(0f, 0f, dropDownHeight.toFloat(), 0f)
+                        translateAnimation.duration = 100
+                        view.startAnimation(translateAnimation)
+                    }
+                }
+            })
+        } else {
+            if (show) {
+                translateAnimation = TranslateAnimation(0f, 0f, dropDownHeight.toFloat(), 0f)
+            } else {
+                translateAnimation = TranslateAnimation(0f, 0f, 0f, dropDownHeight.toFloat())
+            }
+            translateAnimation.duration = 100
+            view.startAnimation(translateAnimation)
+        }
+    }
+
+    fun closeDropDownView(): Boolean {
+        if (dropDownViews.size == 0) {
+            return false
+        }
+        if (dropDownDisPoseable != null && !(dropDownDisPoseable?.isDisposed!!)) {
+            dropDownDisPoseable?.dispose()
+        }
+        playDropDownAnimation(dropDownViews.get(dropDownViews.size - 1), false)
+        root.removeView(dropDownViews.get(dropDownViews.size - 1))
+        dropDownViews.pop()
+        return true
+    }
+
+    override fun onBackPressed() {
+        val closeMoreList = closeDropDownView()
+        if (closeMoreList) {
+            return
+        }
+        super.onBackPressed()
+    }
+
+    override fun setDropDownView(issue: Issue) {
+        val topDropDownView = dropDownViews.get(dropDownViews.size - 1)
+        topDropDownView.setDropDownData(issue.itemList)
+    }
+
+    override fun setMoreDropDownView(issue: Issue?) {
+        loadingMore = false
+        val topDropDownView = dropDownViews.get(dropDownViews.size - 1)
+        issue?.let {
+            topDropDownView.addDropDownData(issue.itemList)
+            return
+        }
     }
 }

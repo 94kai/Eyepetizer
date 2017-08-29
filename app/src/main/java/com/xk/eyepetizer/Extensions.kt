@@ -10,6 +10,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.Serializable
+import java.util.*
+
 
 /**
  * Created by xuekai on 2017/8/20.
@@ -56,7 +58,7 @@ fun <T> Observable<T>.io_main(): Observable<T> {
 }
 
 
-fun View.timeFromat(duration: Long?): String {
+fun View.durationFormat(duration: Long?): String {
     val minute = duration!! / 60
     val second = duration % 60
     if (minute <= 9) {
@@ -72,5 +74,31 @@ fun View.timeFromat(duration: Long?): String {
             return "${minute}' ${second}''"
         }
     }
+}
+
+fun View.timeFormat(time: Long): String {
+    val date = Date(time)
+    val timeCalendar = Calendar.getInstance()
+    timeCalendar.time = date
+
+
+    val today = Calendar.getInstance()
+    val todayDate = Date(System.currentTimeMillis())
+    today.time = todayDate
+
+    if (timeCalendar.get(Calendar.YEAR) === today.get(Calendar.YEAR)) {
+        val diffDay = timeCalendar.get(Calendar.DAY_OF_YEAR) - today.get(Calendar.DAY_OF_YEAR)
+
+        if (diffDay == 0) {
+            //是今天
+            val hours = timeCalendar.get(Calendar.HOUR_OF_DAY)
+            val minues = timeCalendar.get(Calendar.MINUTE)
+            return "${if (hours < 10) "0" + hours else hours}:${if (minues < 10) "0" + minues else minues}"
+        }
+    }
+    val year = timeCalendar.get(Calendar.YEAR)
+    val month = timeCalendar.get(Calendar.MONTH)
+    val day = timeCalendar.get(Calendar.DAY_OF_MONTH)
+    return "${year}/${if (month < 10) "0" + month else month}/${if (day < 10) "0" + day else day}"
 }
 
