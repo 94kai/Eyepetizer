@@ -1,5 +1,7 @@
 package com.xk.eyepetizer.ui.activity
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.os.Bundle
@@ -16,6 +18,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
+import com.example.v1.xklibrary.LogUtil
+import com.shuyu.gsyvideoplayer.GSYVideoManager
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.mvp.contract.DetailContract
 import com.xk.eyepetizer.mvp.model.bean.Issue
@@ -29,21 +35,41 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.layout_detail_drop_down.view.*
 import java.util.*
 
-// TODO: by xk 2017/8/28 17:32 更多视频里面的点击事件  评论
 class DetailActivity : AppCompatActivity(), DetailContract.IView {
-
-
     lateinit var presenter: DetailPresenter
     val adapter by lazy { DetailAdapter() }
     var itemData: Item? = null
     val dropDownViews = Stack<DetailDropDownView>()
     var backgroundBuilder: BitmapRequestBuilder<String, Bitmap>? = null
     private fun initView() {
+
         rv_detail.layoutManager = LinearLayoutManager(this)
         rv_detail.adapter = adapter
-
-
         initListener()
+        videoView.setRotateViewAuto(false)
+        videoView.fullscreenButton.setOnClickListener {
+
+            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            }
+
+            videoView.startWindowFullscreen(this, true, true)
+
+        }
+
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        videoView?.fullWindowPlayer?.fullscreenButton?.setOnClickListener {
+            GSYVideoPlayer.backFromWindowFull(this)
+            if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
+
+        }
+
+
     }
 
     private fun initListener() {
@@ -82,6 +108,21 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        GSYVideoManager.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        GSYVideoManager.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        GSYVideoPlayer.releaseAllVideos()
+    }
+
     override fun setPlayer(playUrl: String) {
         videoView.setUp(playUrl, false, "")
         videoView.startPlayLogic()
@@ -99,27 +140,24 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
     }
 
     override fun setBackground(url: String) {
-        if (backgroundBuilder == null) {
-            backgroundBuilder = Glide.with(this).load(url).asBitmap()
-                    .transform(object : BitmapTransformation(this) {
-                        override fun getId(): String {
-                            return ""
-                        }
+        backgroundBuilder = Glide.with(this).load(url).asBitmap()
+                .transform(object : BitmapTransformation(this) {
+                    override fun getId(): String {
+                        return ""
+                    }
 
-                        override fun transform(pool: BitmapPool?, toTransform: Bitmap?, outWidth: Int, outHeight: Int): Bitmap {
-                            //如果想让图片旋转 非常简单，主要借助于Matrix对象:矩阵对象，将图片转化成像素矩阵。
-                            val matrix = Matrix()
-                            //执行旋转，参数为旋转角度
-                            matrix.postRotate(90f)
-                            //将图形的像素点按照这个矩阵进行旋转
-                            //将矩阵加载到bitmap对象上，进行输出就可以了  如何创建Bitmap对象
-                            //待旋转的bitmap对象，待旋转图片的宽度，待旋转图片的高度
-                            return Bitmap.createBitmap(toTransform, 0, 0, toTransform!!.getWidth(), toTransform.getHeight(), matrix, true)
-                        }
-                    })
-                    .format(DecodeFormat.PREFER_ARGB_8888).centerCrop()
-        }
-
+                    override fun transform(pool: BitmapPool?, toTransform: Bitmap?, outWidth: Int, outHeight: Int): Bitmap {
+                        //如果想让图片旋转 非常简单，主要借助于Matrix对象:矩阵对象，将图片转化成像素矩阵。
+                        val matrix = Matrix()
+                        //执行旋转，参数为旋转角度
+                        matrix.postRotate(90f)
+                        //将图形的像素点按照这个矩阵进行旋转
+                        //将矩阵加载到bitmap对象上，进行输出就可以了  如何创建Bitmap对象
+                        //待旋转的bitmap对象，待旋转图片的宽度，待旋转图片的高度
+                        return Bitmap.createBitmap(toTransform, 0, 0, toTransform!!.getWidth(), toTransform.getHeight(), matrix, true)
+                    }
+                })
+                .format(DecodeFormat.PREFER_ARGB_8888).centerCrop()
         backgroundBuilder?.into(background)
     }
 
@@ -216,6 +254,13 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
     }
 
     override fun onBackPressed() {
+
+        if (StandardGSYVideoPlayer.backFromWindowFull(this)) {
+            if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
+            return
+        }
         val closeMoreList = closeDropDownView()
         if (closeMoreList) {
             return
@@ -236,4 +281,6 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
             return
         }
     }
+
+
 }

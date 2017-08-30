@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.view.View
 import android.widget.Toast
 import io.reactivex.Observable
@@ -102,3 +103,36 @@ fun View.timeFormat(time: Long): String {
     return "${year}/${if (month < 10) "0" + month else month}/${if (day < 10) "0" + day else day}"
 }
 
+fun Context.dataFormat(total: Long): String {
+    var result = ""
+    var speedReal = 0
+    speedReal = (total / (1024)).toInt()
+    if (speedReal < 512) {
+        result = speedReal.toString() + " KB"
+    } else {
+        val mSpeed = speedReal / 1024.0
+        result = (Math.round(mSpeed * 100) / 100.0).toString() + " MB"
+    }
+    return result
+}
+
+/**
+ * 1表示wifi
+ */
+fun Context.getNetType(): Int {
+    val connectService = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetworkInfo = connectService.activeNetworkInfo
+
+
+    if (activeNetworkInfo == null || !activeNetworkInfo.isAvailable()) {
+        return 0
+    } else {
+        // NetworkInfo不为null开始判断是网络类型
+        val netType = activeNetworkInfo?.getType()
+        if (netType == ConnectivityManager.TYPE_WIFI) {
+            // wifi net处理
+            return 1
+        }
+    }
+    return 0
+}

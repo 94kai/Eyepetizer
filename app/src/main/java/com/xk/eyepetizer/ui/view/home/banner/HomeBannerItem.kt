@@ -30,7 +30,10 @@ class HomeBannerItem : FrameLayout {
 
     }
 
-    private fun setUpView() {
+
+    var isVideo = false
+
+    fun setUpView() {
 
         val thumbPlayUrl = data.data?.thumbPlayUrl
 
@@ -39,8 +42,10 @@ class HomeBannerItem : FrameLayout {
         Glide.with(context).load(feedImgUrl).centerCrop().into(imageView)
 
         if (thumbPlayUrl == null || "".equals(thumbPlayUrl)) {
+            isVideo = false
             videoView.visibility = View.GONE
         } else {
+            isVideo = true
             videoView.visibility = View.VISIBLE
             videoView.setUp(thumbPlayUrl, false, "")
             GSYVideoType.setShowType(GSYVideoType.SCREEN_MATCH_FULL)

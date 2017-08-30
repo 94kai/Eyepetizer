@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.TAG
 import com.xk.eyepetizer.mvp.contract.HomeContract
@@ -18,6 +19,8 @@ import com.xk.eyepetizer.showToast
 import com.xk.eyepetizer.ui.adapter.HomeAdapter
 import com.xk.eyepetizer.ui.base.BaseFragment
 import com.xk.eyepetizer.ui.view.home.PullRecyclerView
+import com.xk.eyepetizer.ui.view.home.banner.HomeBanner
+import com.xk.eyepetizer.ui.view.home.banner.HomeBannerItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
@@ -113,9 +116,9 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
             activity.iv_search.setImageResource(R.mipmap.ic_action_search)
             val itemList = homeAdapter.itemList
             val item = itemList[findFirstVisibleItemPosition + homeAdapter.bannerItemListCount - 1]
-            if(item.type=="textHeader"){
+            if (item.type == "textHeader") {
                 activity.tv_bar_title.setText(item.data?.text)
-            }else{
+            } else {
                 activity.tv_bar_title.setText(simpleDateFormat.format(item.data?.date))
             }
         }
@@ -140,6 +143,27 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
     override fun onError() {
         showToast("网络错误")
         rv_home.hideLoading()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (rv_home.getChildAt(0) is HomeBanner) {
+            for (index in 0..(rv_home.getChildAt(0) as HomeBanner).viewPager.childCount - 1) {
+                val homeBannerItem = (rv_home.getChildAt(0) as HomeBanner).viewPager.getChildAt(index) as HomeBannerItem
+                if (homeBannerItem.isVideo) {
+                    homeBannerItem.setUpView()//重新设置视频
+                }
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        GSYVideoPlayer.releaseAllVideos()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
 

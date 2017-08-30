@@ -37,7 +37,7 @@ class HomeBanner : FrameLayout {
     }
 
     private val bannerAdapter: BannerAdapter by lazy { BannerAdapter() }
-    private val viewPager: ViewPager by lazy { ViewPager(context) }
+     val viewPager: ViewPager by lazy { ViewPager(context) }
     private val indicators: LinearLayout by lazy { LinearLayout(context) }
     private val tvTitle: JumpShowTextView by lazy { JumpShowTextView(context) }
     private val tvSlogan: JumpShowTextView by lazy { JumpShowTextView(context) }

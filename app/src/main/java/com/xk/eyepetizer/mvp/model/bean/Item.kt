@@ -58,10 +58,11 @@ data class Item(val type: String, val data: Data?, val tag: String) : Serializab
                          val blurred: String, val sharing: String, val homepage: String) : Serializable
 
         data class WebUrl(val raw: String, val forWeibo: String) : Serializable
-        data class PlayInfo(val name: String, val url: String, val type: String) : Serializable
+        data class PlayInfo(val name: String, val url: String, val type: String,val urlList:ArrayList<Url>) : Serializable
         data class Consumption(val collectionCount: Int, val shareCount: Int, val replyCount: Int) : Serializable
         data class User(val uid: Long, val nickname: String, val avatar: String, val userType: String, val ifPgc: Boolean) : Serializable
         data class ParentReply(val user: User, val message: String) : Serializable
+        data class Url(val size: Long) : Serializable
 
     }
 }

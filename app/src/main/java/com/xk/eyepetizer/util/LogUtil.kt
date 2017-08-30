@@ -22,7 +22,7 @@ class LogUtil {
 
         fun d(msg: String) {
             if ((LD and sLevel) > 0 && isDisplayLog) {
-                Log.d(TAG, msg);
+                Log.i(TAG, msg);
             }
         }
     }
