@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_category"
+        android:layout_width="match_parent"
+        android:scaleType="fitXY"
+        android:layout_height="200dp"/>
+
+    <com.xk.eyepetizer.ui.view.common.PercentTextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:background="#2000"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:textSize="55px"
+        android:textColor="@color/white" />
+</RelativeLayout>

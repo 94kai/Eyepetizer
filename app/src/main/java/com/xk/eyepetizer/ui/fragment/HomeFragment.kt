@@ -18,6 +18,7 @@ import com.xk.eyepetizer.mvp.presenter.HomePresenter
 import com.xk.eyepetizer.showToast
 import com.xk.eyepetizer.ui.adapter.HomeAdapter
 import com.xk.eyepetizer.ui.base.BaseFragment
+import com.xk.eyepetizer.ui.base.tabsId
 import com.xk.eyepetizer.ui.view.home.PullRecyclerView
 import com.xk.eyepetizer.ui.view.home.banner.HomeBanner
 import com.xk.eyepetizer.ui.view.home.banner.HomeBannerItem
@@ -29,19 +30,16 @@ import java.util.*
 /**
  * Created by xuekai on 2017/8/21.
  */
-class HomeFragment : BaseFragment(), HomeContract.IView {
+class HomeFragment : BaseFragment(tabId = tabsId[0]), HomeContract.IView {
 
     val simpleDateFormat by lazy { SimpleDateFormat("- MMM. dd, 'Brunch' -", Locale.ENGLISH) }
 
     val homeAdapter: HomeAdapter by lazy { HomeAdapter() }
 
-    lateinit var presenter: HomePresenter
-    override fun setPresenter(presenter: HomeContract.IPresenter) {
-        this.presenter = presenter as HomePresenter
-    }
+    var presenter: HomePresenter
 
     init {
-        setPresenter(HomePresenter(this))
+        presenter = HomePresenter(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View {
@@ -104,7 +102,10 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
     /**
      * recyclerview滚动的时候会调用这里，在这里设置toolbar
      */
-    private fun setupToolbar() {
+    override fun setupToolbar(): Boolean {
+        if (super.setupToolbar()) {
+            return true
+        }
         val findFirstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()
         if (findFirstVisibleItemPosition == 0) {//设置为透明
             activity.toolbar.setBackgroundColor(0x00000000)
@@ -112,16 +113,21 @@ class HomeFragment : BaseFragment(), HomeContract.IView {
             activity.tv_bar_title.setText("")
 
         } else {
-            activity.toolbar.setBackgroundColor(0xddffffff.toInt())
-            activity.iv_search.setImageResource(R.mipmap.ic_action_search)
-            val itemList = homeAdapter.itemList
-            val item = itemList[findFirstVisibleItemPosition + homeAdapter.bannerItemListCount - 1]
-            if (item.type == "textHeader") {
-                activity.tv_bar_title.setText(item.data?.text)
-            } else {
-                activity.tv_bar_title.setText(simpleDateFormat.format(item.data?.date))
+            if (homeAdapter.itemList.size > 1) {
+
+                activity.toolbar.setBackgroundColor(0xddffffff.toInt())
+                activity.iv_search.setImageResource(R.mipmap.ic_action_search)
+                val itemList = homeAdapter.itemList
+                val item = itemList[findFirstVisibleItemPosition + homeAdapter.bannerItemListCount - 1]
+                if (item.type == "textHeader") {
+                    activity.tv_bar_title.setText(item.data?.text)
+                } else {
+                    activity.tv_bar_title.setText(simpleDateFormat.format(item.data?.date))
+                }
             }
+
         }
+        return true
     }
 
     fun onLoadMore() {

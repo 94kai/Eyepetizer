@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
-import com.example.v1.xklibrary.LogUtil
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
@@ -91,7 +90,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setPresenter(DetailPresenter(this))
+        presenter=DetailPresenter(this)
         setContentView(R.layout.activity_detail)
         initView()
         loadData()
@@ -103,9 +102,6 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
         presenter.requestBasicDataFromMemory(itemData!!)
     }
 
-    override fun setPresenter(presenter: DetailContract.IPresenter) {
-        this.presenter = presenter as DetailPresenter
-    }
 
 
     override fun onResume() {
@@ -280,6 +276,8 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
             topDropDownView.addDropDownData(issue.itemList)
             return
         }
+        //issue为空，没数据
+        topDropDownView.addDropDownData(Item("",null,""))
     }
 
 

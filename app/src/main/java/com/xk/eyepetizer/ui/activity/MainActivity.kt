@@ -4,7 +4,10 @@ import android.app.Fragment
 import android.os.Bundle
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.ui.base.BaseActivity
-import com.xk.eyepetizer.ui.fragment.FindFragment
+import com.xk.eyepetizer.ui.base.BaseFragment
+import com.xk.eyepetizer.ui.base.currentFragment
+import com.xk.eyepetizer.ui.base.tabsId
+import com.xk.eyepetizer.ui.fragment.CategoryFragment
 import com.xk.eyepetizer.ui.fragment.HomeFragment
 import com.xk.eyepetizer.ui.fragment.HotFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -15,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
     // TODO: by xk 2017/8/25 23:30 启动页视频 在assets目录
-    val tabs = listOf(R.id.rb_home, R.id.rb_find, R.id.rb_hot)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,6 +32,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun chooseFragment(checkedId: Int) {
+        currentFragment = checkedId
+
         val beginTransaction = fragmentManager.beginTransaction()
 
         val fragment: Fragment? = fragmentManager.findFragmentByTag(checkedId.toString())
@@ -36,15 +41,17 @@ class MainActivity : BaseActivity() {
             when (checkedId) {
                 R.id.rb_home -> beginTransaction.add(R.id.fl_content, HomeFragment(), checkedId.toString())
                 R.id.rb_hot -> beginTransaction.add(R.id.fl_content, HotFragment(), checkedId.toString())
-                R.id.rb_find -> beginTransaction.add(R.id.fl_content, FindFragment(), checkedId.toString())
+                R.id.rb_category -> beginTransaction.add(R.id.fl_content, CategoryFragment(), checkedId.toString())
             }
         }
-        tabs.forEach { tab ->
+        tabsId.forEach { tab ->
 
-            val aFragment: Fragment? = fragmentManager.findFragmentByTag(tab.toString())
+            val aFragment = fragmentManager.findFragmentByTag(tab.toString()) as BaseFragment?
 
             if (tab == checkedId) {
+//                aFragment.currentFragment=aFragment::class.java
                 aFragment?.let {
+                    aFragment.setupToolbar()
                     beginTransaction.show(it)
                 }
             } else {
@@ -53,6 +60,8 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+
+
         beginTransaction.commit()
 
     }

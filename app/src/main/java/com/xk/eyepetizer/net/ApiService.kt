@@ -1,5 +1,6 @@
 package com.xk.eyepetizer.net
 
+import com.xk.eyepetizer.mvp.model.bean.Category
 import com.xk.eyepetizer.mvp.model.bean.HomeBean
 import com.xk.eyepetizer.mvp.model.bean.Issue
 import io.reactivex.Observable
@@ -44,4 +45,10 @@ interface ApiService {
      */
     @GET("v4/video/related?")
     fun getRelatedData(@Query("id") id: Long): Observable<Issue>
+
+    /**
+     * 获取分类
+     */
+    @GET("v4//categories")
+    fun getCategory(): Observable<ArrayList<Category>>
 }

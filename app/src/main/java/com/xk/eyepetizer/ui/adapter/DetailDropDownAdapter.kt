@@ -7,6 +7,7 @@ import com.xk.eyepetizer.mvp.model.bean.Item
 import com.xk.eyepetizer.ui.view.detail.DetailReplyTitleView
 import com.xk.eyepetizer.ui.view.detail.DetailReplyView
 import com.xk.eyepetizer.ui.view.detail.DetailVideoCardView
+import com.xk.eyepetizer.ui.view.detail.ListEndView
 
 /**
  * Created by xuekai on 2017/8/28.
@@ -16,7 +17,7 @@ class DetailDropDownAdapter : RecyclerView.Adapter<DetailDropDownAdapter.ViewHol
     //    val TYPE_REPLY
     val TYPE_VIDEO = 1
     val TYPE_REPLY = 2
-//    val TYPE_END = 3
+    val TYPE_END = 3
     val TYPE_REPLY_TITLE = 4//最新评论、热门评论
     val data by lazy {
         ArrayList<Item>()
@@ -52,6 +53,10 @@ class DetailDropDownAdapter : RecyclerView.Adapter<DetailDropDownAdapter.ViewHol
             TYPE_REPLY -> {
                 itemView = DetailReplyView(parent?.context)
             }
+            TYPE_END -> {
+                itemView = ListEndView(parent?.context)
+                itemView.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
+            }
             TYPE_REPLY_TITLE -> {
                 itemView = DetailReplyTitleView(parent?.context)
             }
@@ -65,6 +70,9 @@ class DetailDropDownAdapter : RecyclerView.Adapter<DetailDropDownAdapter.ViewHol
     override fun getItemCount(): Int = data.size
 
     override fun getItemViewType(position: Int): Int {
+        if (data[position].data == null) {
+            return TYPE_END
+        }
         when (data[position].type) {
             "reply" -> {
                 return TYPE_REPLY
@@ -83,6 +91,14 @@ class DetailDropDownAdapter : RecyclerView.Adapter<DetailDropDownAdapter.ViewHol
 
     fun addData(items: ArrayList<Item>) {
         data.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun addData(item: Item) {
+        if (data[data.size - 1].data == null) {//最后一个数据是空的情况只能有一个，用来展示the end
+            return
+        }
+        data.add(item)
         notifyDataSetChanged()
     }
 

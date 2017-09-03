@@ -11,6 +11,7 @@
 
 
     <RelativeLayout
+        android:elevation="10dp"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
@@ -63,14 +64,14 @@
             android:textSize="10sp" />
 
         <RadioButton
-            android:id="@+id/rb_find"
+            android:id="@+id/rb_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:drawableTop="@drawable/find_rb_selected"
             android:gravity="center"
-            android:text="发现"
+            android:text="分类"
             android:textColor="@android:color/darker_gray"
             android:textSize="10sp" />
 

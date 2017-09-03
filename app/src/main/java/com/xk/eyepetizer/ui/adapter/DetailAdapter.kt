@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.xk.eyepetizer.mvp.model.bean.Item
-import com.xk.eyepetizer.ui.view.detail.DetailEndItem
+import com.xk.eyepetizer.ui.view.detail.ListEndView
 import com.xk.eyepetizer.ui.view.detail.DetailInfoItem
 import com.xk.eyepetizer.ui.view.detail.DetailTextCardView
 import com.xk.eyepetizer.ui.view.detail.DetailVideoCardView
@@ -72,7 +72,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
                 }
             }
             TYPE_END_CARD -> {
-                (itemView as DetailEndItem).setShow(data.size > 1)
+                (itemView as ListEndView).setShow(data.size > 1)
             }
             else -> {
                 throw IllegalArgumentException("日狗，api蒙错了，出现了第三种情况")
@@ -93,7 +93,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
                 itemView = DetailInfoItem(parent?.context)
             }
             TYPE_END_CARD -> {
-                itemView = DetailEndItem(parent?.context)
+                itemView = ListEndView(parent?.context)
                 itemView.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
             }
             else -> {

@@ -39,6 +39,9 @@ class DetailDropDownView : RelativeLayout {
     fun addDropDownData(items: ArrayList<Item>) {
         adapter.addData(items)
     }
+    fun addDropDownData(item: Item) {
+        adapter.addData(item)
+    }
 
     var onVideoClick: ((Item) -> Unit)? = {}
         set(value) {

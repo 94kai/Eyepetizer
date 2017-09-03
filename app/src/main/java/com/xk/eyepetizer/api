@@ -13,7 +13,7 @@ val STRATEGY = arrayOf("weekly", "monthly", "historical")//周排行 日排行 �
 http://baobab.kaiyanapp.com/api/v1/search?num=10&query=xxx&start=10
 
 //首页请求
-//首页  、 排行  发现
+//首页  、 排行  分类
 
 
 
