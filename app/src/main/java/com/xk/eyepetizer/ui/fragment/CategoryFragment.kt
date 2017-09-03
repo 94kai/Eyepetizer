@@ -12,6 +12,9 @@ import com.xk.eyepetizer.mvp.contract.CategoryContract
 import com.xk.eyepetizer.mvp.model.bean.Category
 import com.xk.eyepetizer.mvp.presenter.CategoryPresenter
 import com.xk.eyepetizer.showToast
+import com.xk.eyepetizer.toActivity
+import com.xk.eyepetizer.toActivityWithSerializable
+import com.xk.eyepetizer.ui.activity.CategoryDetailActivity
 import com.xk.eyepetizer.ui.adapter.CategoryAdapter
 import com.xk.eyepetizer.ui.base.BaseFragment
 import com.xk.eyepetizer.ui.base.tabsId
@@ -73,6 +76,8 @@ class CategoryFragment : BaseFragment(tabId = tabsId[1]), CategoryContract.IView
             }
 
         })
+
+        adapter.onClick = { category -> activity.toActivityWithSerializable<CategoryDetailActivity>(category) }
         categoryPresenter.requestData()
     }
 

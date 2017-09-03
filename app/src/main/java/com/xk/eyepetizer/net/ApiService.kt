@@ -49,6 +49,6 @@ interface ApiService {
     /**
      * 获取分类
      */
-    @GET("v4//categories")
+    @GET("v4/categories")
     fun getCategory(): Observable<ArrayList<Category>>
 }

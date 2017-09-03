@@ -61,6 +61,11 @@ TODO:
 
 
 
+### 分类
+
+- 自定义Behavior实现类似于谷歌折叠toolbar的效果，但又不同
+
+
 ### API接口
 
 [点击查看](https://github.com/kaikaixue/Eyepetizer/blob/master/app/src/main/java/com/xk/eyepetizer/api)

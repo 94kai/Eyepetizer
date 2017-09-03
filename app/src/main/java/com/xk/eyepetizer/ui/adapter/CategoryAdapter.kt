@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.xk.eyepetizer.mvp.model.bean.Category
 import com.xk.eyepetizer.ui.view.category.CategoryItem
 import com.xk.eyepetizer.ui.view.detail.ListEndView
@@ -25,6 +24,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         when (itemViewType) {
             TYPE_STANDARD -> {
                 (holder?.itemView as CategoryItem).setData(data[position])
+                holder.itemView.setOnClickListener { onClick?.invoke(data[position]) }
             }
         }
 
@@ -64,4 +64,6 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     }
 
     class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+
+    var onClick: ((Category) -> Unit)? = {}
 }

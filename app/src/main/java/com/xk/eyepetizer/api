@@ -1,14 +1,20 @@
 //每日精选  一个banner  然后就是时间顺序的数据（不输入date就是banner，输入就是按照日期）
 "http://baobab.wandoujia.com/api/v2/feed?num=2&udid=26868b32e808498db32fd51fb422d00175e179df&vc=83";
-//发现更多
-"http://baobab.wandoujia.com/api/v2/categories?udid=26868b32e808498db32fd51fb422d00175e179df&vc=83";//科普 生活等等 item
+//分类
+http://baobab.kaiyanapp.com/api/v4/categories/
 //热门排行
 "http://baobab.wandoujia.com/api/v3/ranklist?num=10&strategy=%s&udid=26868b32e808498db32fd51fb422d00175e179df&vc=83";
 val STRATEGY = arrayOf("weekly", "monthly", "historical")//周排行 日排行 月排行
 
 
-//发现更多详情接口  根据上面发现的分类，然后结合周 日 月排行来排
-"http://baobab.wandoujia.com/api/v3/videos?categoryName=%s&strategy=%s&udid=26868b32e808498db32fd51fb422d00175e179df&vc=83";
+http://baobab.kaiyanapp.com/api/v4/categories/detail/tab?id=36//分类详情
+
+http://baobab.kaiyanapp.com/api/v4/categories/videoList?id=36 //分类里的全部视频
+
+http://baobab.kaiyanapp.com/api/v4/categories/detail/index?id=36 //分类里的最近更新之类的（该项目中未使用）
+
+http://baobab.kaiyanapp.com/api/v4/categories/detail/pgcs?id=36//分类的作者
+
 //搜索关键字
 http://baobab.kaiyanapp.com/api/v1/search?num=10&query=xxx&start=10
 

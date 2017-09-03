@@ -23,9 +23,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     //banner
     //    compile 'com.youth.banner:banner:1.4.9'  //最新版本
@@ -42,6 +39,7 @@ dependencies {
     compile 'com.shuyu:GSYVideoPlayer:2.0.4'
     compile 'com.android.support:recyclerview-v7:25.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:design:26.0.0-alpha1'
 }
 repositories {
     mavenCentral()
