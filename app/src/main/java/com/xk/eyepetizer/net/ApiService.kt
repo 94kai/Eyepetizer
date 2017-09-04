@@ -51,4 +51,10 @@ interface ApiService {
      */
     @GET("v4/categories")
     fun getCategory(): Observable<ArrayList<Category>>
+
+    /**
+     * 获取分类下的全部数据
+     */
+    @GET("v4/categories/videoList")
+    fun getCategoryItemList(@Query("id") id: Long): Observable<Issue>
 }

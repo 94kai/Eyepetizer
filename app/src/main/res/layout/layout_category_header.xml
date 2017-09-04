@@ -12,10 +12,16 @@
 
     <RelativeLayout
         android:id="@+id/toolbar_bg"
-        android:alpha="0"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_action_back_white" />
         <!--该view是一个参照，用来确定tv_name的目的地-->
         <TextView
             android:id="@+id/tv_temp"
@@ -48,4 +54,21 @@
         android:layout_marginTop="15dp"
         android:textColor="@color/white"
         android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/attention"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_radius"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_description"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="+ 关注"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
 </RelativeLayout>

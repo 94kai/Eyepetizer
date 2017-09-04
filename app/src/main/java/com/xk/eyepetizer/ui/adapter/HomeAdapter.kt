@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.xk.eyepetizer.mvp.model.bean.Item
 import com.xk.eyepetizer.toActivityWithSerializable
 import com.xk.eyepetizer.ui.activity.DetailActivity
-import com.xk.eyepetizer.ui.view.home.HomeStandardItem
+import com.xk.eyepetizer.ui.view.common.StandardVideoItem
 import com.xk.eyepetizer.ui.view.home.HomeTextHeaderItem
 import com.xk.eyepetizer.ui.view.home.banner.HomeBanner
 import com.xk.eyepetizer.util.DisplayManager
@@ -44,9 +44,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
                     (holder?.itemView as HomeBanner).setData(itemList.take(bannerItemListCount).toCollection(ArrayList()))
                 }
             }
-            TYPE_STANDARD -> (holder?.itemView as HomeStandardItem).let {
+            TYPE_STANDARD -> (holder?.itemView as StandardVideoItem).let {
                 it.setOnClickListener { v -> v.context.toActivityWithSerializable<DetailActivity>(itemList[position + bannerItemListCount - 1]) }
-                it.setData(itemList[position + bannerItemListCount - 1])
+                it.setData(itemList[position + bannerItemListCount - 1],"feed")
             }
 
             TYPE_HEADER_TEXT -> (holder?.itemView as HomeTextHeaderItem).setHeaderText(itemList[position + bannerItemListCount - 1].data?.text)
@@ -87,7 +87,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
             TYPE_BANNER -> return ViewHolder(HomeBanner(parent!!.context))
 
             TYPE_STANDARD -> {
-                val textView = HomeStandardItem(parent!!.context)
+                val textView = StandardVideoItem(parent!!.context)
                 return ViewHolder(textView)
             }
             TYPE_HEADER_TEXT -> {

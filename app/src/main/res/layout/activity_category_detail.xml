@@ -14,7 +14,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:background="#0f0"
+        android:background="#fff"
         android:id="@+id/rv_category_detail"
         android:layout_height="match_parent"
         app:layout_behavior="com.xk.eyepetizer.ui.view.category.CategoryDetailBehavior"></android.support.v7.widget.RecyclerView>

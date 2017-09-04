@@ -5,13 +5,15 @@
 
 #### APK[点击这里](https://github.com/kaikaixue/Eyepetizer/blob/master/apk/app-debug.apk)
 
-- kotlin（java出身，功底不够，未能对kotlin有深刻的理解，一边写，一遍领悟吧，多多指正）
+- kotlin
 - rxjava
 - retrofit
 - mvp（第一次在项目中用，可能会有些过度使用、或者该用不用的毛病，欢迎指正）
 - GSYVideoPlayer
+- 自定义behavior
+- 自定义下拉刷新
 
-根据已知的接口，我计划实现：每日精选、发现、热门、搜索几个模块
+根据已知的接口，我计划实现：每日精选、分类、热门几个模块
 
 #### 每日精选
 
@@ -45,15 +47,23 @@ TODO:
 - 根据当前网络状态（流量、wifi）决定播放高清、标清视频
 - 非wifi下视频所需流量提醒
 - 支持全屏播放
+- 播放器生命周期控制
 
 
 
 ##### TODO: 
 
 - 进入作者页面
-- 播放器生命周期控制
 
-#### 发现（未完成）
+#### 分类
+
+有了前面每日精选、详情页的基础，这个模块开发起来快多了，很多都是直接拿来用
+
+主要就是自定义了一个behavior（谷歌官方有一个toolbarbehavior，但是跟这里的效果还是有差距的，所以只能自定义了）
+
+效果如下：
+
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category.gif)
 
 #### 热门（未完成）
 

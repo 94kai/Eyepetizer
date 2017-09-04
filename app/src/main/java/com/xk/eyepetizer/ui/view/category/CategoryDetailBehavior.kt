@@ -1,5 +1,6 @@
 package com.xk.eyepetizer.ui.view.category
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.support.v4.view.ViewCompat
@@ -58,49 +59,47 @@ class CategoryDetailBehavior(context: Context?, attrs: AttributeSet?) : Coordina
 
     //竖直方向全部接收
     override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, directTargetChild: View?, target: View?, nestedScrollAxes: Int): Boolean {
-        Log.i("CategoryDetailBehavior", "onStartNestedScroll-->")
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL
     }
 
     override fun onNestedScrollAccepted(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, directTargetChild: View?, target: View?, nestedScrollAxes: Int) {
-        Log.i("CategoryDetailBehavior", "onNestedScrollAccepted-->${1}")
         super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes)
     }
 
     override fun onNestedPreScroll(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?, dx: Int, dy: Int, consumed: IntArray?) {
-
-
         if (!hasCollaspsed()) {//只要recyclerview的位置大于header最小的值，就不能上下滑动
-            Log.i("CategoryDetailBehavior", "onNestedPreScroll-->${1}")
-            setRecyclerViewState((recyclerview!!.translationY - dy).toInt())
+            val marginTop = (recyclerview!!.translationY - dy).toInt()//recyclerview应该距离顶部的高度
+            if ((marginTop <= header!!.getMaxHeight())&&marginTop>=header!!.getMinHeight()) {
+                setRecyclerViewState(marginTop)
+            }else if(marginTop<header!!.getMinHeight()){
+                setRecyclerViewState(header!!.getMinHeight())
+            }else if(marginTop > header!!.getMaxHeight()){
+                setRecyclerViewState(header!!.getMaxHeight())
+            }
             consumed!![1] = dy
-        }
-//        //headview没有收回去之前，recyclerview是不允许接收到滚动事件的
-//        if (translationY > toolbarHeight && dy > 0 || translationY < maxHeadHeight && dy < 0) {//没有完全收回，所以要消费掉所有的y方向的事件，并且让recyclerview向上走，让headview缩小
-//            if (headView.getHeight() - dy > maxHeadHeight) {
-//                //                    setHeadViewState(maxHeadHeight);
-//                return
-//            } else if (headView.getHeight() - dy < toolbarHeight) {
-//                setHeadViewState(toolbarHeight)
-//            } else {
-//                setHeadViewState(headView.getHeight() - dy)
-//            }
-//
-//
-//            setRecyclerViewState(headView.getHeight())
-//            consumed[1] = dy
-//        }
+        } else {//收回去了
+            //如果recyclerview不能下滑了。。。
+            if (!canSlideBottom()) {//不能下滑了
+                if (dy < 0) {
+                    val marginTop = (recyclerview!!.translationY - dy).toInt()//recyclerview应该距离顶部的高度
+                    setRecyclerViewState(marginTop)
+                    consumed!![1] = dy
+                }
 
-//        }
+            }
+        }
 
     }
 
+    override fun onStopNestedScroll(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?) {
+        playAnimator()
+    }
     override fun onNestedScroll(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed)
     }
 
     override fun onNestedFling(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?, velocityX: Float, velocityY: Float, consumed: Boolean): Boolean {
-        return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed)
+        return true
     }
 
     override fun onNestedPreFling(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?, velocityX: Float, velocityY: Float): Boolean {
@@ -111,7 +110,7 @@ class CategoryDetailBehavior(context: Context?, attrs: AttributeSet?) : Coordina
     }
 
     /**
-     * 是否可以手指下滑
+     * 是否可以手指上滑
      *
      * @return
      */
@@ -120,17 +119,24 @@ class CategoryDetailBehavior(context: Context?, attrs: AttributeSet?) : Coordina
     }
 
     /**
+     * 是否可以手指下滑
+     *
+     * @return
+     */
+    private fun canSlideBottom(): Boolean {
+        return recyclerview!!.canScrollVertically(-1)
+    }
+
+    /**
      * 设置recyclerview距离上面的距离以及高度
      */
 
     private fun setRecyclerViewState(height: Int) {
 //        height从header.max->header.min   求出0-1
-//        val progress = (1f / (header!!.getMinHeight() - header!!.getMaxHeight()) * height - (1f / (header!!.getMinHeight() - header!!.getMaxHeight())))
 
         val temp = header!!.getMinHeight() - header!!.getMaxHeight()
         val progress = height * 1f / temp - header!!.getMaxHeight() * 1f / temp
-//        val progress = 1-header!!.getMinHeight().toFloat()/(header!!.getMinHeight()-header!!.getMaxHeight())+height*(header!!.getMinHeight().toFloat()/(header!!.getMinHeight()-header!!.getMaxHeight()))
-        Log.i("CategoryDetailBehavior","setRecyclerViewState-->${progress}")
+        Log.i("CategoryDetailBehavior", "setRecyclerViewState-->${progress}")
         (1f / (header!!.getMinHeight() - header!!.getMaxHeight()) * height - (1f / (header!!.getMinHeight() - header!!.getMaxHeight())))
         header!!.setCollaspsedProgress(progress)
         recyclerview!!.setTranslationY(height.toFloat())
@@ -143,9 +149,32 @@ class CategoryDetailBehavior(context: Context?, attrs: AttributeSet?) : Coordina
      */
     private fun hasCollaspsed(): Boolean {
         val translationY = recyclerview?.getTranslationY()
-        if ((translationY!! >= header!!.getMinHeight())) {
+        if ((translationY!! > header!!.getMinHeight())) {
             return false
         }
         return true
+    }
+
+    /**
+     * 展开、合上进行了一半，松手后播放动画
+     */
+    private fun playAnimator() {
+        val translationY = recyclerview!!.translationY
+
+        val middle = (header!!.getMinHeight() + header!!.getMaxHeight()) / 2f
+        var end: Int
+
+        if ((translationY > middle)) {
+            end = header!!.getMaxHeight()
+        } else {
+            end = header!!.getMinHeight()
+        }
+        val valueAnimator = ValueAnimator.ofInt(translationY.toInt(), end)
+        valueAnimator.addUpdateListener { animation ->
+            val animatedValue = animation.animatedValue as Int
+            setRecyclerViewState(animatedValue)
+        }
+        valueAnimator.duration = 100
+        valueAnimator.start()
     }
 }

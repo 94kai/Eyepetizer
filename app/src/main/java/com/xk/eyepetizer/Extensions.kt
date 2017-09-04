@@ -103,6 +103,27 @@ fun View.timeFormat(time: Long): String {
     return "${year}/${if (month < 10) "0" + month else month}/${if (day < 10) "0" + day else day}"
 }
 
+/**
+ * 几天前  几小时前
+ */
+fun View.timePreFormat(time: Long): String {
+
+    val now =System.currentTimeMillis()
+    val pre = now - time//多久前
+
+
+    val min = pre / 1000 / 60
+    if (min<1){
+        return "刚刚"
+    }else if(min<60){
+        return ""+min+"分钟前"
+    }else if(min<60*24){
+        return ""+min/60+"小时前"
+    }else {
+        return ""+min/60/24+"天前"
+    }
+}
+
 fun Context.dataFormat(total: Long): String {
     var result = ""
     var speedReal = 0

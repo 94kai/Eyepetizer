@@ -12,7 +12,6 @@ import com.xk.eyepetizer.mvp.contract.CategoryContract
 import com.xk.eyepetizer.mvp.model.bean.Category
 import com.xk.eyepetizer.mvp.presenter.CategoryPresenter
 import com.xk.eyepetizer.showToast
-import com.xk.eyepetizer.toActivity
 import com.xk.eyepetizer.toActivityWithSerializable
 import com.xk.eyepetizer.ui.activity.CategoryDetailActivity
 import com.xk.eyepetizer.ui.adapter.CategoryAdapter
@@ -65,6 +64,7 @@ class CategoryFragment : BaseFragment(tabId = tabsId[1]), CategoryContract.IView
 
         }
         rv_category.layoutManager = gridLayoutManager
+        rv_category.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         rv_category.adapter = adapter
         rv_category.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {

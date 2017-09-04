@@ -1,5 +1,6 @@
 package com.xk.eyepetizer.ui.view.category
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
@@ -26,15 +27,16 @@ class CategoryHeaderView : RelativeLayout {
 
     fun initView() {
         View.inflate(context, R.layout.layout_category_header, this)
+
+        back.setOnClickListener { (context as Activity).finish() }
     }
 
     /**
      * 设置折叠的进度，0表示没有折叠，1表示完全折叠
      * tv_name marginTop从100dp->tvNameStopTop
-     * @param 这个参数比较恶心，kotlin 0.1+0.1出来个0.200001... 所以这里参数传0-10吧 完了内部做处理
      */
     fun setCollaspsedProgress(progress: Float) {
-        if ((progress<0f)) {
+        if ((progress < 0f)) {
             return
         }
         Log.i("CategoryHeaderView", "setCollaspsedProgress-->${progress}")
@@ -49,18 +51,21 @@ class CategoryHeaderView : RelativeLayout {
         tv_name.layoutParams = layoutParams
 
         tv_description.alpha = 1 - progress
+        attention.alpha = 1 - progress
 
         //背景图片总共需要偏移的量
         val bgAllOffset = (getMaxHeight() - getMinHeight()) / 2
-        iv_header_image.translationY= -bgAllOffset*progress
+        iv_header_image.translationY = -bgAllOffset * progress
         if (progress >= 1f) {
-            toolbar_bg.alpha = 1f
+            toolbar_bg.setBackgroundColor(0xffffffff.toInt())
             tv_name.setTextColor(Color.BLACK)
             tv_name.setTypeface(null, Typeface.NORMAL);
+            back.setImageResource(R.mipmap.ic_action_back)
         } else {
-            toolbar_bg.alpha = 0f
+            toolbar_bg.setBackgroundColor(0x00ffffff)
             tv_name.setTextColor(Color.WHITE)
-            tv_name.setTypeface(null, Typeface.BOLD);
+            tv_name.setTypeface(null, Typeface.BOLD)
+            back.setImageResource(R.mipmap.ic_action_back_white)
         }
     }
 

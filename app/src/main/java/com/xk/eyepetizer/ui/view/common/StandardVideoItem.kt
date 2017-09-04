@@ -1,4 +1,4 @@
-package com.xk.eyepetizer.ui.view.home
+package com.xk.eyepetizer.ui.view.common
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -9,14 +9,15 @@ import android.widget.FrameLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.xk.eyepetizer.R
-import com.xk.eyepetizer.mvp.model.bean.Item
 import com.xk.eyepetizer.durationFormat
+import com.xk.eyepetizer.mvp.model.bean.Item
+import com.xk.eyepetizer.timePreFormat
 import kotlinx.android.synthetic.main.item_home_standard.view.*
 
 /**
  * Created by xuekai on 2017/8/23.
  */
-class HomeStandardItem : FrameLayout {
+class StandardVideoItem : FrameLayout {
 
 
     constructor(context: Context?) : this(context, null)
@@ -29,9 +30,16 @@ class HomeStandardItem : FrameLayout {
         View.inflate(context, R.layout.item_home_standard, this)
     }
 
-    fun setData(item: Item) {
+    /**
+     * type表示该item用于哪里，稍有不同
+     */
+    fun setData(item: Item, type: String) {
         val data = item.data
-        val homepage = data?.cover?.homepage
+
+        if (data?.cover?.homepage == null) {
+
+        }
+        val cover = data?.cover?.feed
         var avatar = data?.author?.icon
         var avatarRes = R.mipmap.pgc_default_avatar
 
@@ -39,7 +47,7 @@ class HomeStandardItem : FrameLayout {
             avatar = data?.provider?.icon
         }
 
-        Glide.with(context).load(homepage).centerCrop().into(iv_cover)
+        Glide.with(context).load(cover).centerCrop().into(iv_cover)
 
         val ivAvatarCircle = object : BitmapImageViewTarget(iv_avatar) {
             override fun setResource(resource: Bitmap?) {
@@ -56,12 +64,29 @@ class HomeStandardItem : FrameLayout {
         }
         tv_title.setText(item.data?.title)
         var tagText = ""
+        if (type.equals("feed")) {
+            tagText = ""
+        } else if (type.equals("categorydetail")) {
+            if(data?.author!=null){
+                tagText = data?.author?.name + " / "
+            }else if(data?.provider!=null){
+                tagText = data?.provider?.name + " / "
+            }else{
+                tagText = ""
+            }
+        }
         data?.tags?.take(4)?.forEach { tagText += (it.name + " / ") }
         val timeFromat = durationFormat(data?.duration)
         tagText += timeFromat
         tv_tag.setText(tagText)
-        tv_category.setText(data?.category)
+
+        if (type.equals("feed")) {
+            tv_tag2.setText(data?.category)
+        } else if (type.equals("categorydetail")) {
+            data?.date?.let {
+                tv_tag2.setText(timePreFormat(it))
+            }
+        }
+
     }
-
-
 }
