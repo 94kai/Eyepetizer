@@ -1,6 +1,6 @@
 package com.xk.eyepetizer.ui.base
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import com.xk.eyepetizer.R
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

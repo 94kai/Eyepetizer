@@ -1,7 +1,7 @@
 package com.xk.eyepetizer.ui.activity
 
-import android.app.Fragment
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import com.xk.eyepetizer.R
 import com.xk.eyepetizer.ui.base.BaseActivity
 import com.xk.eyepetizer.ui.base.BaseFragment
@@ -34,9 +34,9 @@ class MainActivity : BaseActivity() {
     private fun chooseFragment(checkedId: Int) {
         currentFragment = checkedId
 
-        val beginTransaction = fragmentManager.beginTransaction()
+        val beginTransaction = supportFragmentManager.beginTransaction()
 
-        val fragment: Fragment? = fragmentManager.findFragmentByTag(checkedId.toString())
+        val fragment: Fragment? = supportFragmentManager.findFragmentByTag(checkedId.toString())
         if (fragment == null) {
             when (checkedId) {
                 R.id.rb_home -> beginTransaction.add(R.id.fl_content, HomeFragment(), checkedId.toString())
@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() {
         }
         tabsId.forEach { tab ->
 
-            val aFragment = fragmentManager.findFragmentByTag(tab.toString()) as BaseFragment?
+            val aFragment = supportFragmentManager.findFragmentByTag(tab.toString()) as BaseFragment?
 
             if (tab == checkedId) {
 //                aFragment.currentFragment=aFragment::class.java

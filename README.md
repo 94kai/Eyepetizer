@@ -1,7 +1,8 @@
-## kotlin实现仿开眼app(持续更新，欢迎star)
+## kotlin实现仿开眼app
 
 > **开眼视频**是一款精品短视频日报应用，该项目是用kotlin，借助已知的一些开眼接口写的一个仿《开眼App》，主要是为了学习kotlin和一些UI效果
 
+[GitHub主页](https://github.com/kaikaixue/)
 
 #### APK[点击这里](https://github.com/kaikaixue/Eyepetizer/blob/master/apk/app-debug.apk)
 
@@ -13,7 +14,7 @@
 - 自定义behavior
 - 自定义下拉刷新
 
-根据已知的接口，我计划实现：每日精选、分类、热门几个模块
+根据已知的接口，主要实现：每日精选、分类、热门几个模块
 
 #### 每日精选
 
@@ -65,15 +66,12 @@ TODO:
 
 ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category.gif)
 
-#### 热门（未完成）
+#### 热门
+有了前面的基础，这个模块没什么好说的，一个tablayout搞定
 
-#### 搜索（未完成）
+效果如下：
 
-
-
-### 分类
-
-- 自定义Behavior实现类似于谷歌折叠toolbar的效果，但又不同
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/hot.gif)
 
 
 ### API接口

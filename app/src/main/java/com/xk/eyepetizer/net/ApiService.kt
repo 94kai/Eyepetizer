@@ -2,6 +2,7 @@ package com.xk.eyepetizer.net
 
 import com.xk.eyepetizer.mvp.model.bean.Category
 import com.xk.eyepetizer.mvp.model.bean.HomeBean
+import com.xk.eyepetizer.mvp.model.bean.HotCategory
 import com.xk.eyepetizer.mvp.model.bean.Issue
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -32,6 +33,12 @@ interface ApiService {
      */
     @GET
     fun getIssue(@Url url: String): Observable<Issue>
+
+    /**
+     * 热门的类别
+     */
+    @GET
+    fun getHotCategory(@Url url: String): Observable<HotCategory>
 
 
     /**

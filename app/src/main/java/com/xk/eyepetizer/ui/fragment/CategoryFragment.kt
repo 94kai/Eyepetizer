@@ -47,10 +47,9 @@ class CategoryFragment : BaseFragment(tabId = tabsId[1]), CategoryContract.IView
     }
 
     var isFirst = true
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_category, null)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater?.inflate(R.layout.fragment_category, null)
     }
-
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val gridLayoutManager = GridLayoutManager(activity, 2)
@@ -76,7 +75,6 @@ class CategoryFragment : BaseFragment(tabId = tabsId[1]), CategoryContract.IView
             }
 
         })
-
         adapter.onClick = { category -> activity.toActivityWithSerializable<CategoryDetailActivity>(category) }
         categoryPresenter.requestData()
     }

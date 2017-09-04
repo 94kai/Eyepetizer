@@ -1,10 +1,10 @@
 package com.xk.eyepetizer
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.Toast
 import io.reactivex.Observable
