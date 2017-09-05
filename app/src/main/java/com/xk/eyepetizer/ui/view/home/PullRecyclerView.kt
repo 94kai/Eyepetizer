@@ -6,6 +6,7 @@ import android.content.Context
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -71,9 +72,13 @@ class PullRecyclerView : RecyclerView {
                     if (!canScrollVertically(-1) && !willRefresh) {
                         canRefresh = true
                     }
-                    resume = true;
+                    resume = true
                 }
             }
+            MotionEvent.ACTION_UP -> {
+                resume = false
+            }
+
         }
         return resume;
     }
@@ -258,7 +263,6 @@ class PullRecyclerView : RecyclerView {
         } else if (distance < 0) {
             distance = 0f
         }
-        LogUtil.d("${distance}-->-->");
         loading.scaleX = distance
         loading.scaleY = distance
     }

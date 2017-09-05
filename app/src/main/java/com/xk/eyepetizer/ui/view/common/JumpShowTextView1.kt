@@ -8,7 +8,6 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import com.example.v1.xklibrary.LogUtil
 import com.xk.eyepetizer.io_main
 import com.xk.eyepetizer.util.DisplayManager
 import io.reactivex.Observable
@@ -98,7 +97,6 @@ class JumpShowTextView1 : View {
 
 
     override fun onDraw(canvas: Canvas?) {
-        LogUtil.d("${right} ${left}-->-->onDraw");
         super.onDraw(canvas)
         val fontMetrics = paint?.getFontMetrics()
 
