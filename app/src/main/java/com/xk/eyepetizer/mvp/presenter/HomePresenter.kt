@@ -58,4 +58,5 @@ class HomePresenter(view: HomeContract.IView) : HomeContract.IPresenter {
                     })
         }
     }
+
 }

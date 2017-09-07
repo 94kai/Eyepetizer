@@ -10,11 +10,15 @@ import com.xk.eyepetizer.mvp.model.bean.Item
  * Created by xuekai on 2017/8/21.
  */
 interface HomeContract {
+
     interface IView : BaseView<IPresenter> {
         fun setFirstData(homeBean: HomeBean)
         fun setMoreData(itemList:ArrayList<Item>)
         fun onError()
     }
+
+
+
 
     interface IPresenter : BasePresenter {
         /**
