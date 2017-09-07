@@ -21,7 +21,7 @@
 效果如图：
 
 
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home1.png  =150x250) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home_small.gif =150x250)
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home1.png)  ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home_small.gif)
 
 该页主要仿了官方app的几个UI
 
@@ -60,22 +60,14 @@
 
 效果如下：
 
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category1.png)
-
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category2.png)
-
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category3.png)
-
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category.gif)
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category1.png) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category2.png) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category3.png) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category.gif)
 
 #### 热门
 有了前面的基础，这个模块没什么好说的，一个tablayout搞定
 
 效果如下：
 
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/hot1.png)
-
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/hot.gif)
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/hot1.png) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/hot.gif)
 
 
 ### API接口
