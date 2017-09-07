@@ -21,10 +21,7 @@
 效果如图：
 
 
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home1.png)
-
-
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home_small.gif)
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home1.png  =150x250) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home_small.gif =150x250)
 
 该页主要仿了官方app的几个UI
 
@@ -42,14 +39,7 @@
 
 效果如图：
 
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/detail1.png)
-
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/recommend.png)
-
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/reply.png)
-
-
-![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/detail.gif)
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/detail1.png) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/recommend.png) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/reply.png) ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/detail.gif)
 
 - item第一次加载的时候，文字跳跃出现，之后不会再跳跃
 - 查看更多相关视频
