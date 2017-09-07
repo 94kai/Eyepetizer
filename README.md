@@ -20,6 +20,10 @@
 
 效果如图：
 
+
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home1.png)
+
+
 ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/home_small.gif)
 
 该页主要仿了官方app的几个UI
@@ -37,6 +41,13 @@
 写到详情页，kotlin也写了几天了，感觉对于kotlin特性的运用（比如函数参数）比每日精选那块要熟悉一点了，继续努力
 
 效果如图：
+
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/detail1.png)
+
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/recommend.png)
+
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/reply.png)
+
 
 ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/detail.gif)
 
@@ -59,12 +70,20 @@
 
 效果如下：
 
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category1.png)
+
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category2.png)
+
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category3.png)
+
 ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/category.gif)
 
 #### 热门
 有了前面的基础，这个模块没什么好说的，一个tablayout搞定
 
 效果如下：
+
+![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/hot1.png)
 
 ![](https://github.com/kaikaixue/Eyepetizer/blob/master/image/hot.gif)
 
