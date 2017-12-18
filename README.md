@@ -5,6 +5,7 @@
 [GitHub主页](https://github.com/kaikaixue/)
 
 #### APK[点击这里](https://github.com/kaikaixue/Eyepetizer/tree/master/apk)
+#### 百度云下载地址[点击这里](链接:https://pan.baidu.com/s/1hsrOhBu)密码:ljt6
 
 - kotlin
 - rxjava
