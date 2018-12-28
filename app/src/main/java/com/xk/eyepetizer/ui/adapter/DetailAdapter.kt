@@ -4,10 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.xk.eyepetizer.mvp.model.bean.Item
-import com.xk.eyepetizer.ui.view.detail.ListEndView
 import com.xk.eyepetizer.ui.view.detail.DetailInfoItem
 import com.xk.eyepetizer.ui.view.detail.DetailTextCardView
 import com.xk.eyepetizer.ui.view.detail.DetailVideoCardView
+import com.xk.eyepetizer.ui.view.detail.ListEndView
 import java.net.URLDecoder
 
 /**
@@ -45,7 +45,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
         notifyItemRangeInserted(1, item.size)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemView = holder?.itemView
         when (getItemViewType(position)) {
             TYPE_TEXT_CARD -> {
@@ -80,7 +80,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View
         when (viewType) {
             TYPE_TEXT_CARD -> {
@@ -121,7 +121,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
     override fun getItemCount(): Int = data.size + 1
 
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 
     var onVideoClick: ((Item) -> Unit)? = null

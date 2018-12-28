@@ -24,8 +24,8 @@ class DetailDropDownAdapter : RecyclerView.Adapter<DetailDropDownAdapter.ViewHol
     }
 
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        val itemView = holder?.itemView
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val itemView = holder.itemView
         when (getItemViewType(position)) {
             TYPE_VIDEO -> {
                 (itemView as DetailVideoCardView).setData(data[position], false)
@@ -44,21 +44,21 @@ class DetailDropDownAdapter : RecyclerView.Adapter<DetailDropDownAdapter.ViewHol
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View
         when (viewType) {
             TYPE_VIDEO -> {
-                itemView = DetailVideoCardView(parent?.context)
+                itemView = DetailVideoCardView(parent.context)
             }
             TYPE_REPLY -> {
-                itemView = DetailReplyView(parent?.context)
+                itemView = DetailReplyView(parent.context)
             }
             TYPE_END -> {
-                itemView = ListEndView(parent?.context)
+                itemView = ListEndView(parent.context)
                 itemView.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
             }
             TYPE_REPLY_TITLE -> {
-                itemView = DetailReplyTitleView(parent?.context)
+                itemView = DetailReplyTitleView(parent.context)
             }
             else -> {
                 throw IllegalArgumentException("日狗，api蒙错了，赶紧改")
@@ -87,7 +87,7 @@ class DetailDropDownAdapter : RecyclerView.Adapter<DetailDropDownAdapter.ViewHol
         return super.getItemViewType(position)
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     fun addData(items: ArrayList<Item>) {
         data.addAll(items)

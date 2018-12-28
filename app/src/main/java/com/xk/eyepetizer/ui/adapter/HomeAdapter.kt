@@ -35,7 +35,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemViewType = getItemViewType(position)
         when (itemViewType) {
             TYPE_BANNER -> {
@@ -81,7 +81,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         when (viewType) {
             TYPE_BANNER -> return ViewHolder(HomeBanner(parent!!.context))
@@ -96,7 +96,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
                         DisplayManager.dip2px(56f)!!)
                 return ViewHolder(headerText)
             }
-            else -> return ViewHolder(null)
+            else -> return ViewHolder(View(parent.context))
         }
     }
 
@@ -105,5 +105,5 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
         bannerItemListCount = size
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

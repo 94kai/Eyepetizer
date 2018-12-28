@@ -86,4 +86,18 @@
             android:textSize="10sp" />
     </RadioGroup>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:onClick="record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="录制"/>
+        <Button
+            android:onClick="play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回放"/>
+    </LinearLayout>
 </RelativeLayout>

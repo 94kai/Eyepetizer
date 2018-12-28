@@ -47,10 +47,10 @@ class CategoryFragment : BaseFragment(tabId = tabsId[1]), CategoryContract.IView
     }
 
     var isFirst = true
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_category, null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_category, null)
     }
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val gridLayoutManager = GridLayoutManager(activity, 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -66,7 +66,7 @@ class CategoryFragment : BaseFragment(tabId = tabsId[1]), CategoryContract.IView
         rv_category.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         rv_category.adapter = adapter
         rv_category.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                 val position = parent.getChildPosition(view)
                 val offset = DisplayManager.dip2px(2f)!!
 
@@ -75,7 +75,7 @@ class CategoryFragment : BaseFragment(tabId = tabsId[1]), CategoryContract.IView
             }
 
         })
-        adapter.onClick = { category -> activity.toActivityWithSerializable<CategoryDetailActivity>(category) }
+        adapter.onClick = { category -> activity?.toActivityWithSerializable<CategoryDetailActivity>(category) }
         categoryPresenter.requestData()
     }
 
@@ -92,9 +92,9 @@ class CategoryFragment : BaseFragment(tabId = tabsId[1]), CategoryContract.IView
             return true
         }
         super.setupToolbar()
-        activity.toolbar.setBackgroundColor(0xddffffff.toInt())
-        activity.iv_search.setImageResource(R.mipmap.ic_action_search)
-        activity.tv_bar_title.setText("分类")
+        activity?.toolbar?.setBackgroundColor(0xddffffff.toInt())
+        activity?.iv_search?.setImageResource(R.mipmap.ic_action_search)
+        activity?.tv_bar_title?.setText("分类")
         return true
     }
 }

@@ -26,21 +26,22 @@ class HotDetailFragment : BaseFragment, HotContract.IHotCategoryView {
     val adapter by lazy { HotCategoryAdapter() }
 
     constructor() : super(-1)
+
     constructor(apiUrl: String) : this() {
         this.apiUrl = apiUrl
         presenter = HotCategoryPresenter(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val recyclerView = RecyclerView(context)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val recyclerView = RecyclerView(container!!.context)
         recyclerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(container.context)
         recyclerView.adapter = adapter
         recyclerView.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         return recyclerView
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.requestData(apiUrl)
     }
 

@@ -19,11 +19,11 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         ArrayList<Category>()
     }
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemViewType = getItemViewType(position)
         when (itemViewType) {
             TYPE_STANDARD -> {
-                (holder?.itemView as CategoryItem).setData(data[position])
+                (holder.itemView as CategoryItem).setData(data[position])
                 holder.itemView.setOnClickListener { onClick?.invoke(data[position]) }
             }
         }
@@ -47,23 +47,22 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         return TYPE_STANDARD
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        var itemView: View? = null
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        var itemView = View(parent.context)
         when (viewType) {
             TYPE_END -> {
-                itemView = ListEndView(parent?.context)
+                itemView = ListEndView(parent.context)
                 itemView.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
                 itemView.tv_text_end.setTextColor(Color.BLACK)
             }
-
             TYPE_STANDARD -> {
-                itemView = CategoryItem(parent?.context)
+                itemView = CategoryItem(parent.context)
             }
         }
         return CategoryAdapter.ViewHolder(itemView)
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     var onClick: ((Category) -> Unit)? = {}
 }

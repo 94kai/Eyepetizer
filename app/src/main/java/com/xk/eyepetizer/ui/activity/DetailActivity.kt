@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -28,13 +27,14 @@ import com.xk.eyepetizer.mvp.model.bean.Item
 import com.xk.eyepetizer.mvp.presenter.DetailPresenter
 import com.xk.eyepetizer.showToast
 import com.xk.eyepetizer.ui.adapter.DetailAdapter
+import com.xk.eyepetizer.ui.base.BaseActivity
 import com.xk.eyepetizer.ui.view.detail.*
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.layout_detail_drop_down.view.*
 import java.util.*
 
-class DetailActivity : AppCompatActivity(), DetailContract.IView {
+class DetailActivity : BaseActivity(), DetailContract.IView {
     lateinit var presenter: DetailPresenter
     val adapter by lazy { DetailAdapter() }
     var itemData: Item? = null
@@ -173,11 +173,11 @@ class DetailActivity : AppCompatActivity(), DetailContract.IView {
 
 
         detailDropDownView.rv_detail_more.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val childCount = detailDropDownView.rv_detail_more.getChildCount()
-                    val itemCount = detailDropDownView.rv_detail_more.layoutManager.getItemCount()
+                    val itemCount = detailDropDownView.rv_detail_more.layoutManager?.getItemCount()
                     val firstVisibleItem = (detailDropDownView.rv_detail_more.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (firstVisibleItem + childCount == itemCount) {
                         Log.d(com.xk.eyepetizer.TAG, "到底了");

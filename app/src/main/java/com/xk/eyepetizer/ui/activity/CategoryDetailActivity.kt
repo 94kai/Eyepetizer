@@ -40,7 +40,7 @@ class CategoryDetailActivity : BaseActivity(), CategoryDetailContract.IView {
         rv_category_detail.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         rv_category_detail.adapter = adapter
         rv_category_detail.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                 val position = parent.getChildPosition(view)
                 val offset = DisplayManager.dip2px(10f)!!
                 if ((position == 0)) {
@@ -51,11 +51,11 @@ class CategoryDetailActivity : BaseActivity(), CategoryDetailContract.IView {
 
 
         rv_category_detail.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val childCount = rv_category_detail.getChildCount()
-                    val itemCount = rv_category_detail.layoutManager.getItemCount()
+                    val itemCount = rv_category_detail.layoutManager?.getItemCount()
                     val firstVisibleItem = (rv_category_detail.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (firstVisibleItem + childCount == itemCount) {
                         Log.d(TAG, "到底了");

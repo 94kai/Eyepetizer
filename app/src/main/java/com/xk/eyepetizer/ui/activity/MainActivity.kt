@@ -2,7 +2,10 @@ package com.xk.eyepetizer.ui.activity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
+import android.widget.Toast
 import com.xk.eyepetizer.R
+import com.xk.eyepetizer.playbackop.OPStates
 import com.xk.eyepetizer.ui.base.BaseActivity
 import com.xk.eyepetizer.ui.base.BaseFragment
 import com.xk.eyepetizer.ui.base.currentFragment
@@ -64,6 +67,18 @@ class MainActivity : BaseActivity() {
 
         beginTransaction.commit()
 
+    }
+
+    fun record(view: View) {
+        OPStates.isRecord = true
+        Toast.makeText(this, "开始录制", Toast.LENGTH_SHORT).show()
+        record()
+    }
+
+    fun play(view: View) {
+        OPStates.play = true
+        Toast.makeText(this, "开始播放", Toast.LENGTH_SHORT).show()
+        play()
     }
 
 }

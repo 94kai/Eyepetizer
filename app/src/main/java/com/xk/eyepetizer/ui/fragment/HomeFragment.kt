@@ -43,11 +43,11 @@ class HomeFragment : BaseFragment(tabId = tabsId[0]), HomeContract.IView {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_home, null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_home, null)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
         presenter.requestFirstData()
@@ -57,9 +57,9 @@ class HomeFragment : BaseFragment(tabId = tabsId[0]), HomeContract.IView {
     private fun initView() {
 
 
-        activity.tv_bar_title?.typeface = Typeface.createFromAsset(activity?.assets, "fonts/Lobster-1.4.otf")
-        val paint = activity.tv_bar_title.paint
-        paint.setFakeBoldText(true)
+        activity?.tv_bar_title?.typeface = Typeface.createFromAsset(activity?.assets, "fonts/Lobster-1.4.otf")
+        val paint = activity?.tv_bar_title?.paint
+        paint?.setFakeBoldText(true)
 
 
         rv_home.adapter = homeAdapter
@@ -71,11 +71,11 @@ class HomeFragment : BaseFragment(tabId = tabsId[0]), HomeContract.IView {
         })
 
         rv_home.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val childCount = rv_home.getChildCount()
-                    val itemCount = rv_home.layoutManager.getItemCount()
+                    val itemCount = rv_home.layoutManager?.getItemCount()
                     val firstVisibleItem = (rv_home.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (firstVisibleItem + childCount == itemCount) {
                         Log.d(TAG, "到底了");
@@ -87,7 +87,7 @@ class HomeFragment : BaseFragment(tabId = tabsId[0]), HomeContract.IView {
                 }
             }
 
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 setupToolbar()
             }
@@ -108,21 +108,21 @@ class HomeFragment : BaseFragment(tabId = tabsId[0]), HomeContract.IView {
         }
         val findFirstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()
         if (findFirstVisibleItemPosition == 0) {//设置为透明
-            activity.toolbar.setBackgroundColor(0x00000000)
-            activity.iv_search.setImageResource(R.mipmap.ic_action_search_white)
-            activity.tv_bar_title.setText("")
+            activity?.toolbar?.setBackgroundColor(0x00000000)
+            activity?.iv_search?.setImageResource(R.mipmap.ic_action_search_white)
+            activity?.tv_bar_title?.setText("")
 
         } else {
             if (homeAdapter.itemList.size > 1) {
 
-                activity.toolbar.setBackgroundColor(0xddffffff.toInt())
-                activity.iv_search.setImageResource(R.mipmap.ic_action_search)
+                activity?.toolbar?.setBackgroundColor(0xddffffff.toInt())
+                activity?.iv_search?.setImageResource(R.mipmap.ic_action_search)
                 val itemList = homeAdapter.itemList
                 val item = itemList[findFirstVisibleItemPosition + homeAdapter.bannerItemListCount - 1]
                 if (item.type == "textHeader") {
-                    activity.tv_bar_title.setText(item.data?.text)
+                    activity?.tv_bar_title?.setText(item.data?.text)
                 } else {
-                    activity.tv_bar_title.setText(simpleDateFormat.format(item.data?.date))
+                    activity?.tv_bar_title?.setText(simpleDateFormat.format(item.data?.date))
                 }
             }
 

@@ -22,8 +22,8 @@ class CategoryDetailAdapter : RecyclerView.Adapter<CategoryDetailAdapter.ViewHol
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        (holder?.itemView as StandardVideoItem).let {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        (holder.itemView as StandardVideoItem).let {
             it.setOnClickListener { v -> v.context.toActivityWithSerializable<DetailActivity>(categorys[position ]) }
             it.setData(categorys[position],"categorydetail")
         }
@@ -32,10 +32,10 @@ class CategoryDetailAdapter : RecyclerView.Adapter<CategoryDetailAdapter.ViewHol
 
     override fun getItemCount(): Int = categorys.size
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        return ViewHolder(StandardVideoItem(parent!!.context))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(StandardVideoItem(parent.context))
     }
 
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

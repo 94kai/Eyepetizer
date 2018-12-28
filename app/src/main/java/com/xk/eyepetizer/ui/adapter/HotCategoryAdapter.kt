@@ -23,26 +23,26 @@ class HotCategoryAdapter : RecyclerView.Adapter<HotCategoryAdapter.ViewHolder>()
 
     val TYPE_STANDARD = 1
     val TYPE_END = 2
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (getItemViewType(position) == TYPE_STANDARD) {
-            (holder?.itemView as HotItem).setData(data[position])
-            holder?.itemView.setOnClickListener { v -> v.context.toActivityWithSerializable<DetailActivity>(data[position]) }
+            (holder.itemView as HotItem).setData(data[position])
+            holder.itemView.setOnClickListener { v -> v.context.toActivityWithSerializable<DetailActivity>(data[position]) }
 
         }
     }
 
     override fun getItemCount(): Int = if (data.size == 0) 0 else data.size + 1
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        var itemView: View? = null
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        var itemView = View(parent.context)
 
         when (viewType) {
             TYPE_STANDARD -> {
-                itemView = (HotItem(parent?.context))
+                itemView = (HotItem(parent.context))
                 itemView.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
             }
             TYPE_END -> {
-                itemView = ListEndView(parent?.context)
+                itemView = ListEndView(parent.context)
                 itemView.tv_text_end.setTextColor(0xff000000.toInt())
                 itemView.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
             }
@@ -58,6 +58,6 @@ class HotCategoryAdapter : RecyclerView.Adapter<HotCategoryAdapter.ViewHolder>()
         }
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 }

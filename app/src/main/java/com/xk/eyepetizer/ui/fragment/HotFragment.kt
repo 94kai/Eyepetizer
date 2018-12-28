@@ -30,7 +30,7 @@ class HotFragment : BaseFragment(tabId = tabsId[2]), HotContract.IHotFragmentVie
         for (tab in hotCategory.tabInfo.tabList) {
             fragmentList.add(HotDetailFragment(tab.apiUrl))
         }
-        val hotViewPagerAdapter = HotViewPagerAdapter(fragmentManager, titleList, fragmentList)
+        val hotViewPagerAdapter = HotViewPagerAdapter(fragmentManager!!, titleList, fragmentList)
         vpMain.setAdapter(hotViewPagerAdapter)
         tablayout.setupWithViewPager(vpMain)
 
@@ -48,11 +48,11 @@ class HotFragment : BaseFragment(tabId = tabsId[2]), HotContract.IHotFragmentVie
         showToast("网络错误")
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_hot, null)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.requestHotCategory()
 
     }
@@ -62,9 +62,9 @@ class HotFragment : BaseFragment(tabId = tabsId[2]), HotContract.IHotFragmentVie
             return true
         }
         super.setupToolbar()
-        activity.toolbar.setBackgroundColor(0xddffffff.toInt())
-        activity.iv_search.setImageResource(R.mipmap.ic_action_search)
-        activity.tv_bar_title.setText("热门")
+        activity?.toolbar?.setBackgroundColor(0xddffffff.toInt())
+        activity?.iv_search?.setImageResource(R.mipmap.ic_action_search)
+        activity?.tv_bar_title?.setText("热门")
         return true
     }
 

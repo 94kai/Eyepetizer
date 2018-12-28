@@ -24,7 +24,7 @@ class CategoryDetailBehavior(context: Context?, attrs: AttributeSet?) : Coordina
     var parentHeight = 0
 
     //确定child和dependency（behavior作用于recyclerview，所以他叫child）
-    override fun layoutDependsOn(parent: CoordinatorLayout?, child: RecyclerView?, dependency: View?): Boolean {
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: RecyclerView, dependency: View): Boolean {
         if (header == null) {
             header = dependency as CategoryHeaderView?
         }
@@ -43,7 +43,7 @@ class CategoryDetailBehavior(context: Context?, attrs: AttributeSet?) : Coordina
 
     var isFirstLayoutChild = true
     //此时dependency布局完成，在这里布局child
-    override fun onLayoutChild(parent: CoordinatorLayout?, child: RecyclerView?, layoutDirection: Int): Boolean {
+    override fun onLayoutChild(parent: CoordinatorLayout, child: RecyclerView, layoutDirection: Int): Boolean {
         if (isFirstLayoutChild) {
             setRecyclerViewState(header!!.height)
             isFirstLayoutChild = false
@@ -51,22 +51,19 @@ class CategoryDetailBehavior(context: Context?, attrs: AttributeSet?) : Coordina
         return super.onLayoutChild(parent, child, layoutDirection)
     }
 
-    override fun onDependentViewChanged(parent: CoordinatorLayout?, child: RecyclerView?, dependency: View?): Boolean {
+    override fun onDependentViewChanged(parent: CoordinatorLayout, child: RecyclerView, dependency: View): Boolean {
         Log.i("CategoryDetailBehavior", "onDependentViewChanged-->${1}")
         return super.onDependentViewChanged(parent, child, dependency)
     }
 
 
     //竖直方向全部接收
-    override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, directTargetChild: View?, target: View?, nestedScrollAxes: Int): Boolean {
+    override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: RecyclerView, directTargetChild: View, target: View, nestedScrollAxes: Int): Boolean {
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL
     }
 
-    override fun onNestedScrollAccepted(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, directTargetChild: View?, target: View?, nestedScrollAxes: Int) {
-        super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes)
-    }
 
-    override fun onNestedPreScroll(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?, dx: Int, dy: Int, consumed: IntArray?) {
+    override fun onNestedPreScroll(coordinatorLayout: CoordinatorLayout, child: RecyclerView, target: View, dx: Int, dy: Int, consumed: IntArray) {
         if (!hasCollaspsed()) {//只要recyclerview的位置大于header最小的值，就不能上下滑动
             val marginTop = (recyclerview!!.translationY - dy).toInt()//recyclerview应该距离顶部的高度
             if ((marginTop <= header!!.getMaxHeight())&&marginTop>=header!!.getMinHeight()) {
@@ -91,18 +88,15 @@ class CategoryDetailBehavior(context: Context?, attrs: AttributeSet?) : Coordina
 
     }
 
-    override fun onStopNestedScroll(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?) {
+    override fun onStopNestedScroll(coordinatorLayout: CoordinatorLayout, child: RecyclerView, target: View) {
         playAnimator()
     }
-    override fun onNestedScroll(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed)
-    }
 
-    override fun onNestedFling(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?, velocityX: Float, velocityY: Float, consumed: Boolean): Boolean {
+    override fun onNestedFling(coordinatorLayout: CoordinatorLayout, child: RecyclerView, target: View, velocityX: Float, velocityY: Float, consumed: Boolean): Boolean {
         return true
     }
 
-    override fun onNestedPreFling(coordinatorLayout: CoordinatorLayout?, child: RecyclerView?, target: View?, velocityX: Float, velocityY: Float): Boolean {
+    override fun onNestedPreFling(coordinatorLayout: CoordinatorLayout, child: RecyclerView, target: View, velocityX: Float, velocityY: Float): Boolean {
         if (!hasCollaspsed()) {//header没有缩回去
             return true
         }

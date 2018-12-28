@@ -12,11 +12,13 @@ import com.xk.eyepetizer.ui.activity.DetailActivity
  * Created by xuekai on 2017/8/21.
  */
 class BannerAdapter : PagerAdapter() {
+
+
     var datas: ArrayList<Item>? = null
     var viewList: ArrayList<HomeBannerItem> = ArrayList()
 
-    override fun isViewFromObject(view: View?, `object`: Any?): Boolean {
-        return view == `object`
+    override fun isViewFromObject(view: View, obj: Any): Boolean {
+        return view == obj
     }
 
     override fun getCount(): Int {
@@ -46,6 +48,5 @@ class BannerAdapter : PagerAdapter() {
         view.setOnClickListener { v->v.context.toActivityWithSerializable<DetailActivity>(datas!![position]) }
         return view
     }
-
 
 }
